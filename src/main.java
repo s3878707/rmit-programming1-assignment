@@ -33,6 +33,7 @@ public class main {
             }
         }
         System.out.print("\nWrite down the country here >>>>>>>");
+        System.out.println("Quang");
         String country = sc.nextLine().trim();
         country = csVdata.printErrorWhenUserEnterWrong(country, "location");
 
