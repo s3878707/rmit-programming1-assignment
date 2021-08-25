@@ -96,7 +96,7 @@ public class main {
 //        } while (option != 4) ;
         database database = new database(geo, arrOfTime, csVdata);
 //        System.out.println(database);
-        Group gr = new Group(database,"c");
+        Group gr = new Group(database,"b");
         for (ArrayList<Data> i : gr.grouping){
             System.out.println(i);
         }
