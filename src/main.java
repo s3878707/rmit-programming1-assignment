@@ -24,6 +24,7 @@ public class main {
 
         //Let the user choose the country
         System.out.println("Choose the country");
+        System.out.println("BLAH BLAH BLAH");
         String[] countryList = geo.listOfRegion(csVdata, "location");
         n = 1;
         for (String country : countryList) {
