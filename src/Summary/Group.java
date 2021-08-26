@@ -1,20 +1,23 @@
+package Summary;
+
+import Data.Data;
+import Data.Database;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Group {
     Scanner sc = new Scanner(System.in);
-    ArrayList<ArrayList<Data>> grouping = new ArrayList<>();
-    public Group(database data, String option) {
-        ArrayList<Data> listData = data.getArr();
+    private ArrayList<ArrayList<Data>> grouping = new ArrayList<>();
+    public Group(Database data, String option) {
+        ArrayList<Data> listData = data.getSelectedData();
         int size = listData.size();
-        if (option == "a")
+        if (option.equals("a"))
             return;
-        if (option == "b"){
+        if (option.equals("b")){
             System.out.println("Enter number of groups:");
             int numberOfGroup = sc.nextInt();
             int[] groupSize = new int[numberOfGroup];
             int i = 0;
-//            int size = listData.size();
             while (size!=0){
                 groupSize[i]+=1;
                 i++;
@@ -33,7 +36,7 @@ public class Group {
                 grouping.add(l);
             }
         }
-        if (option=="c"){
+        if (option.equals("c")){
             System.out.println("Please enter the day in a group");
             int numberOfDays = sc.nextInt();
             while (size % numberOfDays != 0){
@@ -55,7 +58,9 @@ public class Group {
 //    public String toString(){
 //        return String.format("")
 //    }
-
+    public ArrayList<ArrayList<Data>> getGrouping(){
+        return grouping;
+    }
     public static void main(String[] args) {
     }
 }

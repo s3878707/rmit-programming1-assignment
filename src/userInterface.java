@@ -1,3 +1,8 @@
+import Csvprocess.CSVdata;
+import Data.Geo;
+import Data.TimeRange;
+import Data.Database;
+
 import java.io.FileNotFoundException;
 
 import java.util.*;
@@ -67,10 +72,10 @@ public class userInterface {
                         System.out.println("|                                      DATA                                          |");
                         System.out.println("**************************************************************************************");
                         System.out.println("*********************** PLEASE CHOOSE OPTION YOU WANT TO APPLY ***********************");
-                        System.out.println("|   1. Data -> Option [a]: Enter the start date and end date (inclusive)             |");
-                        System.out.println("|   2. Data -> Option [b]: A number of days or weeks from a particular date          |");
-                        System.out.println("|   2. Data -> Option [c]: A number of days or weeks to a particular date            |");
-                        System.out.println("|   3. Data -> Option [d]: Back to Main Menu                                         |");
+                        System.out.println("|   1. Data.Data -> Option [a]: Enter the start date and end date (inclusive)             |");
+                        System.out.println("|   2. Data.Data -> Option [b]: A number of days or weeks from a particular date          |");
+                        System.out.println("|   2. Data.Data -> Option [c]: A number of days or weeks to a particular date            |");
+                        System.out.println("|   3. Data.Data -> Option [d]: Back to Main Menu                                         |");
                         System.out.println("**************************************************************************************");
                         System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
                         dataOption = sc.next();
@@ -118,7 +123,7 @@ public class userInterface {
                             default:
                                 break;
                         }
-                        database database = new database(geo, arrOfTime,csvData);
+                        Database database = new Database(geo, arrOfTime,csvData);
                         System.out.println(database);
 
 

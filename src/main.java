@@ -1,3 +1,11 @@
+import Csvprocess.CSVdata;
+import Data.Geo;
+import Data.TimeRange;
+import Data.Database;
+import Summary.Group;
+import Summary.Metric;
+import Summary.Result;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 public class main {
@@ -94,10 +102,22 @@ public class main {
             case 4:
         }
 //        } while (option != 4) ;
-        database database = new database(geo, arrOfTime, csVdata);
-//        System.out.println(database);
+        Database database = new Database(geo, arrOfTime, csVdata);
+//        System.out.println(Data.database);
         Group gr = new Group(database,"b");
-        for (ArrayList<Data> i : gr.grouping){
+//        for (ArrayList<Data.Data> i : gr.grouping){
+//            System.out.println(i);
+//        }
+
+
+
+        Metric metric = new Metric(gr,"c");
+        for (ArrayList<Integer> i : metric.getMetricList()){
+            System.out.println(i);
+        }
+
+        Result result = new Result(metric,"a");
+        for (Integer i : result.getResults()){
             System.out.println(i);
         }
     }

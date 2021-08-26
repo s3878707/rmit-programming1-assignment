@@ -1,11 +1,11 @@
+package Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class TimeRange {
+public class TimeRange {
 
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private ArrayList<String> arr = new ArrayList<>();

@@ -1,8 +1,10 @@
+package Csvprocess;
+
 import java.util.*;
 import java.io.*;
-class CSVdata {
+public class CSVdata {
     private ArrayList<HashMap<String, String>> csvData = new ArrayList<>();
-    public   CSVdata(String path) throws FileNotFoundException {
+    public CSVdata(String path) throws  FileNotFoundException{
         Scanner sc = new Scanner(new File(path));
         String[] header = sc.nextLine().split(",");
         while (sc.hasNextLine()) {
@@ -43,7 +45,10 @@ class CSVdata {
     public ArrayList<HashMap<String, String>> getCsvData(){
         return csvData;
     }
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws FileNotFoundException{
+        CSVdata data = new CSVdata("covid-data.csv");
+        for (HashMap<String,String> i : data.getCsvData()){
+            System.out.println(i);
+        }
     }
 }
