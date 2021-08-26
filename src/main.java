@@ -14,7 +14,7 @@ public class main {
         System.out.println("COVID TRACKER");
         System.out.println("Please enter the file");
         String path = sc.nextLine();
-        CSVdata csVdata = new CSVdata(path);
+        CSVdata csVdata = new CSVdata();
 
 
         //Let the user choose a continent
@@ -111,12 +111,12 @@ public class main {
 
 
 
-        Metric metric = new Metric(gr,"c");
-        for (ArrayList<Integer> i : metric.getMetricList()){
+        Metric metric = new Metric(gr,"a");
+        for (ArrayList<Integer> i : metric.getMetricListForUpTo()){
             System.out.println(i);
         }
 
-        Result result = new Result(metric,"a");
+        Result result = new Result(metric,"b",gr);
         for (Integer i : result.getResults()){
             System.out.println(i);
         }

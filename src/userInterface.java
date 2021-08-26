@@ -12,7 +12,7 @@ public class userInterface {
         System.out.println("COVID TRACKER");
         System.out.println("Please enter your file name here");
         String path = fileOption.nextLine();
-        CSVdata csvData = new CSVdata(path);
+        CSVdata csvData = new CSVdata();
         //Let the user choose the continent
 //        public static void mainMenu() {
         int menuOption;

@@ -4,8 +4,8 @@ import java.util.*;
 import java.io.*;
 public class CSVdata {
     private ArrayList<HashMap<String, String>> csvData = new ArrayList<>();
-    public CSVdata(String path) throws  FileNotFoundException{
-        Scanner sc = new Scanner(new File(path));
+    public CSVdata() throws  FileNotFoundException{
+        Scanner sc = new Scanner(new File("test.csv"));
         String[] header = sc.nextLine().split(",");
         while (sc.hasNextLine()) {
             HashMap<String, String> row = new HashMap<>();
@@ -46,7 +46,7 @@ public class CSVdata {
         return csvData;
     }
     public static void main(String[] args) throws FileNotFoundException{
-        CSVdata data = new CSVdata("covid-data.csv");
+        CSVdata data = new CSVdata();
         for (HashMap<String,String> i : data.getCsvData()){
             System.out.println(i);
         }

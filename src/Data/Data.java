@@ -7,7 +7,11 @@ public class Data {
     private int newCases;
     private int newDeaths;
     private int vaccinated;
-
+    public Data data;
+    public Data(Data data){
+        this.data = data;
+    }
+    public Data(){}
     public Data(String continent, String location, String localDate, String newCases, String newDeaths, String newVaccinated) {
         this.continent = continent;
         this.location = location;

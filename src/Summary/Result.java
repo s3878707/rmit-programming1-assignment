@@ -1,12 +1,17 @@
 package Summary;
 
+import Csvprocess.CSVdata;
+import Data.*;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Result {
     private ArrayList<Integer> results = new ArrayList<>();
-    public Result(Metric metric, String option){
-        ArrayList<ArrayList<Integer>> metricList = metric.getMetricList();
-        if (option.equals("a")){
+    public Result(Metric metric, String option, Group group) throws FileNotFoundException {
+        ArrayList<ArrayList<Data>> groupingList = group.getGrouping();
+        if (option.equals("a")) {
+            ArrayList<ArrayList<Integer>> metricList = metric.getMetricList();
             for (ArrayList<Integer> i : metricList) {
                 int newTotalinAGroup = 0;
                 for (int n = 0; n < i.size(); n++) {
@@ -16,7 +21,14 @@ public class Result {
             }
         }
         if (option.equals("b")) {
-
+            ArrayList<ArrayList<Integer>> metricListForUpTo = metric.getMetricListForUpTo();
+            for (ArrayList<Integer> i : metricListForUpTo) {
+                int newToTalFromTheBeginning = 0;
+                for (int n = 0; n<i.size(); n++){
+                    newToTalFromTheBeginning += i.get(n);
+                }
+                results.add(newToTalFromTheBeginning);
+            }
         }
     }
     public ArrayList<Integer> getResults(){
