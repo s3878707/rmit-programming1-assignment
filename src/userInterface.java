@@ -13,20 +13,19 @@ public class userInterface {
         int menuOption;
         do {
             System.out.println("**************************");
-            System.out.println("|       Main Menu         |");
-            System.out.println("|  1.OPTION [1]: DATA     |");
-            System.out.println("|  2.OPTION [2]: SUMMARY  |");
-            System.out.println("|  3.OPTION [3]: DISPLAY  |");
-            System.out.println("|  4.OPTION [4]: EXIT     |");
+            System.out.println("|     WORKING PROCESS     |");
+            System.out.println("|    1.STEP [1]: DATA     |");
+            System.out.println("|    2.STEP [2]: SUMMARY  |");
+            System.out.println("|    3.STEP [3]: DISPLAY  |");
+            System.out.println("|    4.OPTION: EXIT   |");
             System.out.println("**************************");
             Scanner sc = new Scanner(System.in);
-            System.out.print("Please choose your next option:");
+            System.out.print("PLEASE FOLLOW THE STEP:");
             menuOption = sc.nextInt(); //*********************another scanner need to ask*********************//
             switch (menuOption) {
                 case 1:
                     Geo geo = new Geo();
-                    System.out.println("Your choice is Option 1: DATA");
-                    System.out.println("");
+                    System.out.println("YOUR FIRST STEP IS 1: DATA\n");
                     System.out.println("**************************************************************************************");
                     System.out.println("                        HERE ARE THE CONTINENTS:                        ");
 
@@ -70,7 +69,7 @@ public class userInterface {
                         System.out.println("|   1. Data -> Option [a]: Enter the start date and end date (inclusive)             |");
                         System.out.println("|   2. Data -> Option [b]: A number of days or weeks from a particular date          |");
                         System.out.println("|   2. Data -> Option [c]: A number of days or weeks to a particular date            |");
-                        System.out.println("|   3. Data -> Option [d]: Back to Main Menu                                         |");
+                        System.out.println("|   3. Data -> Option [d]: Back to Progress                                          |");
                         System.out.println("**************************************************************************************");
                         System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
                         dataOption = sc.next();
