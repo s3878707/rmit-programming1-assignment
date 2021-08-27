@@ -128,7 +128,39 @@ public class userInterface {
 
                     } while (!dataOption.equals("d"));
                     break;
-
+//                case 2:
+//                    System.out.println("YOUR SECOND STEP IS 2:SUMMARY:");
+//                    String summOption;
+//                    do {
+//                        System.out.println("**************************************************************************************");
+//                        System.out.println("|                                    SUMMARY                                         |");
+//                        System.out.println("**************************************************************************************");
+//                        System.out.println("*********************** PLEASE CHOOSE OPTION YOU WANT TO APPLY ***********************");
+//                        System.out.println("|   1. SUM -> OPTION [a]: GROUPING DATA                                              |");
+//                        System.out.println("|   2. SUM -> OPTION [b]: METRIC                                                     |");
+//                        System.out.println("|   2. SUM -> OPTION [c]: RESULT                                                     |");
+//                        System.out.println("|   3. SUM -> Option [d]: Back to Progress                                           |");
+//                        System.out.println("**************************************************************************************");
+//                        System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
+//                        summOption = fileOption.next();
+//                        switch (summOption){
+//                            case "a":
+//                                System.out.println("YOUR CHOICE IS [a]: GROUPING DATA ");
+//                                String groupingOp;
+//                                do{
+//                                    System.out.println("**************************************************************************************");
+//                                    System.out.println("|                                 SUMMARY GROUPING DATA                              |");
+//                                    System.out.println("**************************************************************************************");
+//                                    System.out.println("|   1. GROUPING DATA -> OPTION [1]: NO GROUPING                                      |");
+//                                    System.out.println("|   1. GROUPING DATA -> OPTION [2]: NUMBER OG GROUPS                                 |");
+//                                    System.out.println("|   1. GROUPING DATA -> OPTION [3]: NO GROUPING                                      |");
+//                                    System.out.println("|   1. GROUPING DATA -> OPTION [4]: NO GROUPING                                      |");
+//                                    System.out.println("**************************************************************************************");
+//                                    System.out.println("CHOOSE YOUR OPTION THROUGH 1, 2, 3, 4");
+//
+//                                }
+//                        }
+//                    }
                 case 4:
                     System.out.println("EXIT");
                     break;
