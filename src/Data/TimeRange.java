@@ -2,7 +2,6 @@ package Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,12 +25,12 @@ public class TimeRange {
             }
             if (b.charAt(0)=='0') {
                 b = b.replaceFirst("0","");
-                }
+            }
             arr.add(b);
         }
     }
     public TimeRange(){};
-   private static LocalDate convertStringToLocaleDate(String date, String Error) {
+    private static LocalDate convertStringToLocaleDate(String date, String Error) {
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
         Scanner sc = new Scanner(System.in);
         while (!date.matches(regex)) {
