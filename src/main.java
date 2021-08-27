@@ -10,13 +10,13 @@ public class main {
         System.out.println("COVID TRACKER");
         System.out.println("Please enter the file");
         String path = sc.nextLine();
-        CSVdata csVdata = new CSVdata();
+        CSVdata csvData = new CSVdata();
 
 
         //Let the user choose a continent
         Geo geo = new Geo();
         System.out.println("Choose the continent");
-        String[] continentList = geo.listOfRegion(csVdata, "continent");
+        String[] continentList = geo.listOfRegion(csvData, "continent");
         int n = 1;
         for (String i : continentList) {
             System.out.printf("\t%d - %s", n, i);
@@ -24,15 +24,15 @@ public class main {
         }
         System.out.print("\nWrite down the continent here >>>>>>>");
         String continent = sc.nextLine().trim();
-        continent = csVdata.printErrorWhenUserEnterWrong(continent, "continent");
+        continent = csvData.printErrorWhenUserEnterWrong(continent, "continent");
 
         //Let the user choose the country
         System.out.println("Choose the country");
         System.out.println("BLAH BLAH BLAH");
-        String[] countryList = geo.listOfRegion(csVdata, "location");
+        String[] countryList = geo.listOfRegion(csvData, "location");
         n = 1;
         for (String country : countryList) {
-            if (csVdata.checkIfDataContainsNextData(continent, country)) {
+            if (csvData.checkIfDataContainsNextData(continent, country)) {
                 System.out.printf("\t%d - %s\n", n, country);
                 n++;
             }
@@ -40,7 +40,7 @@ public class main {
         System.out.print("\nWrite down the country here >>>>>>>");
         System.out.println("Quang");
         String country = sc.nextLine().trim();
-        country = csVdata.printErrorWhenUserEnterWrong(country, "location");
+        country = csvData.printErrorWhenUserEnterWrong(country, "location");
 
         geo = new Geo(continent, country);
 
@@ -98,7 +98,7 @@ public class main {
             case 4:
         }
 //        } while (option != 4) ;
-        Database database = new Database(geo, arrOfTime, csVdata);
+        Database database = new Database(geo, arrOfTime, csvData);
 //        System.out.println(database);
         Group gr = new Group(database,"b");
         for (ArrayList<Data> i : gr.grouping){

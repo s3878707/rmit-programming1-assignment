@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 public class CSVdata {
     private ArrayList<HashMap<String, String>> csvData = new ArrayList<>();
-    public   CSVdata() throws FileNotFoundException {
+    public CSVdata() throws  FileNotFoundException{
         Scanner sc = new Scanner(new File("test.csv"));
         String[] header = sc.nextLine().split(",");
         while (sc.hasNextLine()) {
@@ -45,7 +45,10 @@ public class CSVdata {
     public ArrayList<HashMap<String, String>> getCsvData(){
         return csvData;
     }
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws FileNotFoundException{
+        CSVdata data = new CSVdata();
+        for (HashMap<String,String> i : data.getCsvData()){
+            System.out.println(i);
+        }
     }
 }
