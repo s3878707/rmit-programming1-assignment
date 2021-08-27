@@ -1,10 +1,14 @@
+package Results;
+
+import Data.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Group {
     Scanner sc = new Scanner(System.in);
-    ArrayList<ArrayList<Data>> grouping = new ArrayList<>();
-    public Group(database data, String option) {
+    public ArrayList<ArrayList<Data>> grouping = new ArrayList<>();
+    public Group(Database data, String option) {
         ArrayList<Data> listData = data.getArr();
         int size = listData.size();
         if (option == "a")

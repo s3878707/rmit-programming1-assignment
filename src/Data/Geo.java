@@ -1,11 +1,14 @@
-import java.io.FileNotFoundException;
+package Data;
+
+import CSVData.CSVdata;
+import Data.*;
 import java.util.*;
 
 public class Geo {
     private String country;
     private String continent;
-    Geo(){};
-    Geo (String continent,String country) {
+    public Geo(){};
+    public Geo (String continent,String country) {
         this.continent = continent;
         this.country = country;
     }

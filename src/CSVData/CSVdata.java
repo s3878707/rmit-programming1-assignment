@@ -1,9 +1,11 @@
+package CSVData;
+
 import java.util.*;
 import java.io.*;
-class CSVdata {
+public class CSVdata {
     private ArrayList<HashMap<String, String>> csvData = new ArrayList<>();
-    public   CSVdata(String path) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File(path));
+    public   CSVdata() throws FileNotFoundException {
+        Scanner sc = new Scanner(new File("test.csv"));
         String[] header = sc.nextLine().split(",");
         while (sc.hasNextLine()) {
             HashMap<String, String> row = new HashMap<>();

@@ -1,3 +1,7 @@
+import CSVData.CSVdata;
+import Data.*;
+import Results.*;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 public class main {
@@ -6,7 +10,7 @@ public class main {
         System.out.println("COVID TRACKER");
         System.out.println("Please enter the file");
         String path = sc.nextLine();
-        CSVdata csVdata = new CSVdata(path);
+        CSVdata csVdata = new CSVdata();
 
 
         //Let the user choose a continent
@@ -94,7 +98,7 @@ public class main {
             case 4:
         }
 //        } while (option != 4) ;
-        database database = new database(geo, arrOfTime, csVdata);
+        Database database = new Database(geo, arrOfTime, csVdata);
 //        System.out.println(database);
         Group gr = new Group(database,"b");
         for (ArrayList<Data> i : gr.grouping){
