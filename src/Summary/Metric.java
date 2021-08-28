@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Metric {
     private ArrayList<ArrayList<Integer>> metricList= new ArrayList<>();
     private ArrayList<ArrayList<Integer>> metricListForUpTo= new ArrayList<>();
+    public Metric (){}
 
 
     public Metric(Group group, String option) throws FileNotFoundException {
