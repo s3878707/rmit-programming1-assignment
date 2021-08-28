@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Group {
     Scanner sc = new Scanner(System.in);
     private ArrayList<ArrayList<Data>> grouping = new ArrayList<>();
+    public Group (){}
     public Group(Database data, String option) {
         ArrayList<Data> listData = data.getSelectedData();
         int size = listData.size();

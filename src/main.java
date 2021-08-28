@@ -104,6 +104,15 @@ public class main {
         for (ArrayList<Data> i : gr.getGrouping()){
             System.out.println(i);
         }
+        Metric metric = new Metric(gr,"a");
+        for (ArrayList<Integer> i : metric.getMetricListForUpTo()){
+            System.out.println(i);
+        }
+
+        Results result = new Results(metric,"b",gr);
+        for (Integer i : result.getResults()){
+            System.out.println(i);
+        }
     }
 }
 
