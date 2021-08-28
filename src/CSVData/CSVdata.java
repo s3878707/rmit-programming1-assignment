@@ -5,7 +5,7 @@ import java.io.*;
 public class CSVdata {
     private ArrayList<HashMap<String, String>> csvData = new ArrayList<>();
     public CSVdata() throws  FileNotFoundException{
-        Scanner sc = new Scanner(new File("covid-data.csv"));
+        Scanner sc = new Scanner(new File("test.csv"));
         String[] header = sc.nextLine().split(",");
         while (sc.hasNextLine()) {
             HashMap<String, String> row = new HashMap<>();
