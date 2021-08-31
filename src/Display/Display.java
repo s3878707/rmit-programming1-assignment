@@ -3,10 +3,10 @@ import java.util.*;
 import Summary.Group;
 import Summary.Metric;
 import Summary.Results;
-
+import Data.*;
 import java.util.ArrayList;
-public class display {
-    public static void tabular(Group group, Metric metric, Results results){
+public class Display {
+    public static void tabular(Group group, Metric metric, Results results) {
 
         ArrayList<Integer> displayValue = query(group, metric, results);
 
@@ -14,8 +14,11 @@ public class display {
 
         interface tableInterface {
             String cellWidthFirstCol(int width, String value);
+
             String cellWidth(int width, String value);
+
             String horizontalBorder(int width);
+
             String horizontalBorderFirstCol(int width);
         }
         tableInterface table = new tableInterface() {
@@ -65,8 +68,8 @@ public class display {
                 table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
 
 
-
     }
+
     public static void chart(Group group, Metric metric, Results results) {
         int vertical = 24;
         int horizontal = 80;
@@ -82,16 +85,16 @@ public class display {
 
         int max = 0;
         int zeroCount = 0;
-        for (Integer i : displayValue){
-            if (max < i){
+        for (Integer i : displayValue) {
+            if (max < i) {
                 max = i;
             }
-            if (i == 0){
+            if (i == 0) {
                 zeroCount += 1;
             }
         }
 
-        for (Integer value : displayValue){
+        for (Integer value : displayValue) {
             int position = vertical - 2;
             if (zeroCount != displayValue.size()) {
                 position = Math.round((vertical - 2) - (((float) value / max)) * (vertical - 2));
@@ -100,33 +103,33 @@ public class display {
         }
 
         spacing = (int) Math.floor((float) (horizontal - 1) / displayValue.size());
-        for (int i = 0; i < vertical; i++){
-            for (int j = 0; j < horizontal; j++){
+        for (int i = 0; i < vertical; i++) {
+            for (int j = 0; j < horizontal; j++) {
                 displayChart[i][j] = ' ';
             }
         }
 
         int index = 0;
-        for (int i = 1; i <= chartPositionValue.size() * spacing; i += spacing){
+        for (int i = 1; i <= chartPositionValue.size() * spacing; i += spacing) {
             displayChart[chartPositionValue.get(index)][i] = '*';
             index += 1;
         }
 
-        for (int i = 0; i < vertical; i++){
-            for (int j = 0; j < horizontal; j ++){
-                if (i == vertical -1 ){
-                    displayChart[i][j] =  '_';
+        for (int i = 0; i < vertical; i++) {
+            for (int j = 0; j < horizontal; j++) {
+                if (i == vertical - 1) {
+                    displayChart[i][j] = '_';
                 }
-                if (j == 0){
+                if (j == 0) {
                     displayChart[i][j] = '|';
                 }
             }
         }
-        for (int i = 0; i < vertical; i++){
-            for (int j = 0; j < horizontal; j++){
-                if (j != horizontal -1){
+        for (int i = 0; i < vertical; i++) {
+            for (int j = 0; j < horizontal; j++) {
+                if (j != horizontal - 1) {
                     System.out.print(displayChart[i][j]);
-                }else {
+                } else {
                     System.out.print(displayChart[i][j]);
                 }
             }
@@ -134,66 +137,65 @@ public class display {
     }
 
 
-
-    public static ArrayList<Integer> query(Group group, Metric metric, Results results){
+    public static ArrayList<Integer> query(Group group, Metric metric, Results results) {
 
         ArrayList<ArrayList<Integer>> value = new ArrayList<>();
-            for (int i = 0; i < group.getGrouping().size(); i++){
-                ArrayList<Integer> valueGroup = new ArrayList<>();
-                for (int j = 0; j < group.getGrouping().get(i).size(); i++){
-                    switch (metric) {
-                        case "a" -> {
-                            int k = group.getGrouping().get(i).get(j).getNewCases();
-                            valueGroup.add(k);
-                        }
-                        case "b" -> {
-                            int k = group.getGrouping().get(i).get(j).getNewDeaths();
-                            valueGroup.add(k);
-                        }
-                        case "c" -> {
-                            int k = group.getGrouping().get(i).get(j).getVaccinated();
-                            valueGroup.add(k);
-                        }
+        for (int i = 0; i < group.getGrouping().size(); i++) {
+            ArrayList<Integer> valueGroup = new ArrayList<>();
+            for (int j = 0; j < group.getGrouping().get(i).size(); i++) {
+                switch (metric) {
+                    case "a" -> {
+                        int k = group.getGrouping().get(i).get(j).getNewCases();
+                        valueGroup.add(k);
                     }
-                }
-                value.add(valueGroup);
-            }
-            ArrayList<Integer> displayValue = new ArrayList<>();
-            int groupValue = 0;
-            for (ArrayList<Integer> integers : value){
-                for (int j = 0; j < integers.size(); j++){
-                    groupValue += integers.get(j);
-                    switch (results){
-                        //NEW TOTAL
-                        case "a" -> {
-                            if (j == integers.size() - 1){
-                                displayValue.add(groupValue);
-                            }
-                        }
-                        //UP TO
-                        case "b" -> {
-                            if (j == integers.size() -1){
-                                displayValue.add(groupValue);
-                                groupValue = 0;
-                            }
-                        }
+                    case "b" -> {
+                        int k = group.getGrouping().get(i).get(j).getNewDeaths();
+                        valueGroup.add(k);
+                    }
+                    case "c" -> {
+                        int k = group.getGrouping().get(i).get(j).getVaccinated();
+                        valueGroup.add(k);
                     }
                 }
             }
-            return displayValue;
-    }
-        public static ArrayList<String> groupRange(Group group){
-            ArrayList<String> range = new ArrayList<>();
-            for (int i = 0; i < group.getGrouping().size(); i++){
-                int groupSize = group.getGrouping().get(i).size();
-                String startDate = group.getGrouping().get(i).get(0).toString(); //missing the getDate()
-                String endDate = group.getGrouping().get(i).get(groupSize -1 ).toString(); //missing the getDate()
-                if (groupSize > 1){
-                    range.add(startDate + " - " + endDate);
-                }else {
-                    range.add(startDate);
-                }
-            }
-            return range;
+            value.add(valueGroup);
         }
+        ArrayList<Integer> displayValue = new ArrayList<>();
+        int groupValue = 0;
+        for (ArrayList<Integer> integers : value) {
+            for (int j = 0; j < integers.size(); j++) {
+                groupValue += integers.get(j);
+                switch (results) {
+                    //NEW TOTAL
+                    case "a" -> {
+                        if (j == integers.size() - 1) {
+                            displayValue.add(groupValue);
+                        }
+                    }
+                    //UP TO
+                    case "b" -> {
+                        if (j == integers.size() - 1) {
+                            displayValue.add(groupValue);
+                            groupValue = 0;
+                        }
+                    }
+                }
+            }
+        }
+        return displayValue;
+    }
+    public static ArrayList<String> groupRange(Group groupObject) {
+        ArrayList<ArrayList<Data>> groups = groupObject.getGrouping();
+        ArrayList<String> listOfRange = new ArrayList<>();
+        for (ArrayList<Data> group : groups) {
+            String startDay = group.get(0).getLocalDate();
+            String endDay = group.get(group.size() - 1).getLocalDate();
+            if (group.size() > 1) {
+                listOfRange.add(startDay + "-" + endDay);
+            } else {
+                listOfRange.add(startDay);
+            }
+        }
+        return listOfRange;
+    }
 }
