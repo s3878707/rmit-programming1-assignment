@@ -31,8 +31,8 @@ public class userInterface {
             System.out.println("|    3.STEP [3]: DISPLAY  |");
             System.out.println("|    4.OPTION[4]: EXIT    |");
             System.out.println("***************************");
+            System.out.print("PLEASE ENTER 1 TO CONTINUE:");
             Scanner sc = new Scanner(System.in);
-            System.out.print("PLEASE FOLLOW THE STEP:");
             menuOption = sc.nextInt();
             if (menuOption == 4) {
                 return;
@@ -45,10 +45,10 @@ public class userInterface {
                 System.out.println("**************************************************************************************");
                 System.out.println("                        HERE ARE THE CONTINENTS:                        ");
 
-                String[] continentList = geo.listOfRegion(csvData, "continent");
-                int n = 1;
+                ArrayList<String> continentList = geo.makeContinentList();
+                int n=1;
                 for (String i : continentList) {
-                    System.out.printf("\t %s", i);
+                    System.out.printf("%3d - %-10s", n, i);
                     n++;
                 }
                 System.out.println("\n**************************************************************************************");
@@ -61,12 +61,17 @@ public class userInterface {
                 System.out.println("**************************************************************************************");
                 System.out.println("*                              Please choose the Country:                            *");
                 System.out.println("**************************************************************************************");
-                String[] countryList = geo.listOfRegion(csvData, "location");
+                ArrayList<String> countryList = geo.makeLocationList();
                 n = 1;
                 for (String country : countryList) {
-                    if (csvData.checkIfDataContainsNextData(continent, country)) {
-                        System.out.printf("\t%d - %s\n", n, country);
-                        n++;
+                    if (csvData.checkIfDataContainsNextData(country, continent)) {
+                        if (n % 3 != 0) {
+                            System.out.printf("%3d - %s", n, String.format("%-40s", country));
+                            n++;
+                        } else {
+                            System.out.printf("%3d - %s\n", n, String.format("%-40s", country));
+                            n++;
+                        }
                     }
                 }
                 //ask the user to enter the country name again
@@ -89,56 +94,23 @@ public class userInterface {
                     System.out.println("**************************************************************************************");
                     System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
                     dataOption = sc.next();
-
                     switch (dataOption) {
                         case "a":
-                            System.out.println("\nENTER THE START DAY: (MM/DD/YYYY) ");
-                            String start = fileOption.nextLine();
-                            System.out.println("\nENTER THE END DAY:   (MM/DD/YYYY) ");
-                            String end = fileOption.nextLine();
-                            arrOfTime = new TimeRange(start, end);
-                            dataOption = "d";
+
+                            arrOfTime = new TimeRange(1);
                             break;
                         case "b":
-                            System.out.print("""
-                                    CHOOSE THE  OPTION WEEKS OR DAYS
-                                    \ta---WEEKS
-                                    \tb---DAYS
-                                    >>>""");
-                            String choice = fileOption.nextLine();
-                            System.out.println("\nPLEASE ENTER THE RANGE:");
-                            int range = Integer.parseInt(fileOption.nextLine());
-                            System.out.println("\nENTER THE START DAY:\n");
-                            start = fileOption.nextLine();
-                            end = arrOfTime.plusDaysOrWeeks(choice, start, range);
-                            arrOfTime = new TimeRange(start, end);
-                            dataOption = "d";
+                            arrOfTime = new TimeRange(2);
                             break;
-
                         case "c":
-
-                            System.out.print("""
-                                    CHOOSE THE  OPTION WEEKS OR DAYS
-                                    \ta---WEEKS
-                                    \tb---DAYS
-                                    >>>\s""");
-                            choice = fileOption.nextLine();
-                            System.out.println("\nPLEASE ENTER THE RANGE");
-                            range = Integer.parseInt(fileOption.nextLine());
-                            System.out.println("\nENTER THE END DAY:");
-                            end = fileOption.nextLine();
-                            start = arrOfTime.minusDaysOrWeeks(choice, end, range);
-                            arrOfTime = new TimeRange(start, end);
-                            dataOption = "d";
+                            arrOfTime = new TimeRange(3);
                             break;
-//                        case "d":
-//                            menuOption = 4;
-//                        default:
-//                            break;
+                        default:
+                            System.out.println("PLEASE CHOOSE AGAIN");
                     }
-                } while (!dataOption.equals("d"));
+                } while (!dataOption.equals("a")&&!dataOption.equals("b")&&!dataOption.equals("c")) ;
                 System.out.println("DATA IS RECORDED SUCCESSFULLY, PLEASE CONTINUE WITH STEP 2");
-                database = new Database(geo, arrOfTime, csvData);
+                database = new Database(geo, arrOfTime);
                 System.out.println("YOUR SECOND STEP IS 2:SUMMARY:");
                 String summOption;
 

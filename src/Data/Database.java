@@ -9,9 +9,9 @@ public class Database {
 
     private ArrayList<Data> selectedData = new ArrayList<>();
     public Database(){};
-    public Database(Geo geo, TimeRange timeRange, CSVdata data) throws FileNotFoundException{
+    public Database(Geo geo, TimeRange timeRange) throws FileNotFoundException{
         ProcessedData processedData = new ProcessedData();
-        for (String localDate : timeRange.getArr()) {
+        for (String localDate : timeRange.getListOfDate()) {
             for (Data map : processedData.getProcessedData()) {
                 if (map.getLocation().equals(geo.getCountry()) && map.getLocalDate().equals(localDate)) {
                     selectedData.add(new Data(

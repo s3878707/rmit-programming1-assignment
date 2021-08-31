@@ -2,13 +2,12 @@ package Summary;
 
 import Data.*;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Results {
     private ArrayList<Integer> results = new ArrayList<>();
-    public Results(Metric metric, String option, Group group) throws FileNotFoundException {
-        ArrayList<ArrayList<Data>> groupingList = group.getGrouping();
+    public Results(Metric metric, String option, Group group) {
+
         if (option.equals("a")) {
             ArrayList<ArrayList<Integer>> metricList = metric.getMetricList();
             for (ArrayList<Integer> i : metricList) {
@@ -33,7 +32,5 @@ public class Results {
     public ArrayList<Integer> getResults(){
         return results;
     }
-//    private int upToData(int lastDate, Csvprocess.CSVdata data){
-//
-//    }
+
 }

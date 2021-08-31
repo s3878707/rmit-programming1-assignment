@@ -16,10 +16,10 @@ public class main {
         //Let the user choose a continent
         Geo geo = new Geo();
         System.out.println("Choose the continent");
-        String[] continentList = geo.listOfRegion(csvData, "continent");
+        ArrayList<String> continentList = geo.makeContinentList();
         int n = 1;
         for (String i : continentList) {
-            System.out.printf("\t%d - %s", n, i);
+            System.out.printf("%3d - %-10s", n, i);
             n++;
         }
         System.out.print("\nWrite down the continent here >>>>>>>");
@@ -29,12 +29,17 @@ public class main {
         //Let the user choose the country
         System.out.println("Choose the country");
         System.out.println("BLAH BLAH BLAH");
-        String[] countryList = geo.listOfRegion(csvData, "location");
+        ArrayList<String> countryList = geo.makeLocationList();
         n = 1;
         for (String country : countryList) {
-            if (csvData.checkIfDataContainsNextData(continent, country)) {
-                System.out.printf("\t%d - %s\n", n, country);
-                n++;
+            if (csvData.checkIfDataContainsNextData(country, continent)) {
+                if (n % 3 != 0) {
+                    System.out.printf("%3d - %s", n, String.format("%-40s", country));
+                    n++;
+                } else {
+                    System.out.printf("%3d - %s\n", n, String.format("%-40s", country));
+                    n++;
+                }
             }
         }
         System.out.print("\nWrite down the country here >>>>>>>");
@@ -47,58 +52,35 @@ public class main {
         //Let the user choose date range
         int option;
         TimeRange arrOfTime = new TimeRange();
-//        do {
-        System.out.print("""
-                Choose a format for date range:
-                \t1 - Enter start day and end day (format : MM/dd/yyyy)
-                \t2 - Number of days or weeks before end date, inclusive
-                \t3 - Number of days or weeks after start date, inclusive
-                \t4 - Back to menu
-                >>>\s"""
-        );
-        option = Integer.parseInt(sc.nextLine());
-        switch (option) {
-            case 1:
-                System.out.println("Enter start day");
-                String start = sc.nextLine();
-                System.out.println("Enter end day");
-                String end = sc.nextLine();
-                arrOfTime = new TimeRange(start, end);
-                break;
-            case 2:
-                System.out.print("""
-                        Choose days or weeks
-                        \ta---Weeks
-                        \tb---Days
-                        >>>\s"""
-                );
-                String choice = sc.nextLine();
-                System.out.println("Enter the range");
-                int range = Integer.parseInt(sc.nextLine());
-                System.out.println("Enter the end day");
-                end = sc.nextLine();
-                start = arrOfTime.minusDaysOrWeeks(choice, end, range);
-                arrOfTime = new TimeRange(start, end);
-                break;
-            case 3:
-                System.out.print("""
-                        Choose days or weeks
-                        \ta---Weeks
-                        \tb---Days
-                        >>>\s"""
-                );
-                choice = sc.nextLine();
-                System.out.println("Enter the range");
-                range = Integer.parseInt(sc.nextLine());
-                System.out.println("Enter the start day");
-                start = sc.nextLine();
-                end = arrOfTime.plusDaysOrWeeks(choice, start, range);
-                arrOfTime = new TimeRange(start, end);
-                break;
-            case 4:
-        }
-//        } while (option != 4) ;
-        Database database = new Database(geo, arrOfTime, csvData);
+        String dataOption;
+        do {
+            System.out.println("");
+            System.out.println("                                       DATA                                           ");
+            System.out.println("**************************************************************************************");
+            System.out.println("*********************** PLEASE CHOOSE OPTION YOU WANT TO APPLY ***********************");
+            System.out.println("|   1. Data -> Option [a]: Enter the start date and end date (inclusive)             |");
+            System.out.println("|   2. Data -> Option [b]: A number of days or weeks from a particular date          |");
+            System.out.println("|   3. Data -> Option [c]: A number of days or weeks to a particular date            |");
+//                    System.out.println("|   4. Data -> Option [d]: Back to the main menu                                     |");
+            System.out.println("**************************************************************************************");
+            System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
+            dataOption = sc.next();
+            switch (dataOption) {
+                case "a":
+
+                    arrOfTime = new TimeRange(1);
+                    break;
+                case "b":
+                    arrOfTime = new TimeRange(2);
+                    break;
+                case "c":
+                    arrOfTime = new TimeRange(3);
+                    break;
+                default:
+                    System.out.println("PLEASE CHOOSE AGAIN");
+            }
+        } while (!dataOption.equals("a")&&!dataOption.equals("b")&&!dataOption.equals("c")) ;
+        Database database = new Database(geo, arrOfTime);
 //        System.out.println(database);
         Group gr = new Group(database,"b");
         for (ArrayList<Data> i : gr.getGrouping()){

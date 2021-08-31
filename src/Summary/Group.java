@@ -12,10 +12,18 @@ public class Group {
         ArrayList<Data> listData = data.getSelectedData();
         int size = listData.size();
         if (option.equals("a"))
-            return;
+            for (Data i : listData){
+                ArrayList<Data> groupContainOneData = new ArrayList<>();
+                groupContainOneData.add(i);
+                grouping.add(groupContainOneData);
+            }
         if (option.equals("b")){
-            System.out.println("Enter number of groups:");
+            System.out.println("ENTER NUMBER OF GROUPS:");
             int numberOfGroup = sc.nextInt();
+            while (numberOfGroup>listData.size()) {
+                System.out.println("THE NUMBER OF GROUPS MUST SMALLER THAN THE NUMBER OF DATAS:");
+                numberOfGroup = sc.nextInt();
+            }
             int[] groupSize = new int[numberOfGroup];
             int i = 0;
             while (size!=0){
@@ -37,10 +45,10 @@ public class Group {
             }
         }
         if (option.equals("c")){
-            System.out.println("Please enter the day in a group");
+            System.out.println("ENTER THE DAYS IN A GROUP");
             int numberOfDays = sc.nextInt();
             while (size % numberOfDays != 0){
-                System.out.println("Please enter again");
+                System.out.println("PLEASE ENTER THE VALID NUMBER OF DAYS");
                 numberOfDays = sc.nextInt();
             }
             int numberOfGroups = size/numberOfDays;
@@ -55,12 +63,7 @@ public class Group {
             }
         }
     }
-    //    public String toString(){
-//        return String.format("")
-//    }
     public ArrayList<ArrayList<Data>> getGrouping(){
         return grouping;
-    }
-    public static void main(String[] args) {
     }
 }

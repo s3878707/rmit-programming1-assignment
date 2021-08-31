@@ -16,27 +16,28 @@ public class Metric {
         ProcessedData processedData = new ProcessedData();
         ArrayList<Data> processedDataList = processedData.getProcessedData();
 
-        if (option.equals("a")){
-            for (ArrayList<Data> i : listGroup){
+        if (option.equals("a")) {
+            for (ArrayList<Data> i : listGroup) {
                 ArrayList<Integer> positivesCaseList = new ArrayList<>();
 
                 ArrayList<Integer> positiveCaseListFromTheBeginning = new ArrayList<>();
-                for (Data n : i){
+                for (Data n : i) {
                     positivesCaseList.add(n.getNewCases());
                 }
                 metricList.add(positivesCaseList);
 
                 Data lastDataOfGroup = i.get(i.size() - 1);
                 Data newlastDataOfGroup = new Data();
-                for (Data j : processedDataList){
-                    if (j.getLocalDate().equals(lastDataOfGroup.getLocalDate())){
+                for (Data j : processedDataList) {
+                    if (j.getLocalDate().equals(lastDataOfGroup.getLocalDate())
+                            && j.getLocation().equals(lastDataOfGroup.getLocation())) {
                         newlastDataOfGroup = new Data(j);
                     }
                 }
                 for (Data j : processedDataList) {
 
-                    if (j.getLocation().equals(lastDataOfGroup.getLocation())&&
-                            processedDataList.indexOf(j)<= processedDataList.indexOf(newlastDataOfGroup.data)) {
+                    if (j.getLocation().equals(lastDataOfGroup.getLocation()) &&
+                            processedDataList.indexOf(j) <= processedDataList.indexOf(newlastDataOfGroup.data)) {
                         positiveCaseListFromTheBeginning.add(j.getNewCases());
                     }
                 }
@@ -45,10 +46,9 @@ public class Metric {
 
         }
         if (option.equals("b")) {
-            ArrayList<Integer> newDeathsList = new ArrayList<>();
-
-            ArrayList<Integer> newDeathsListFromTheBeginning = new ArrayList<>();
             for (ArrayList<Data> i : listGroup) {
+                ArrayList<Integer> newDeathsList = new ArrayList<>();
+                ArrayList<Integer> newDeathsListFromTheBeginning = new ArrayList<>();
                 for (Data n : i) {
                     newDeathsList.add(n.getNewDeaths());
                 }
@@ -57,7 +57,8 @@ public class Metric {
                 Data lastDataOfGroup = i.get(i.size() - 1);
                 Data newlastDataOfGroup = new Data();
                 for (Data j : processedDataList) {
-                    if (j.getLocalDate().equals(lastDataOfGroup.getLocalDate())) {
+                    if (j.getLocalDate().equals(lastDataOfGroup.getLocalDate())
+                            && j.getLocation().equals(lastDataOfGroup.getLocation())) {
                         newlastDataOfGroup = new Data(j);
                     }
                 }
@@ -71,13 +72,31 @@ public class Metric {
                 metricListForUpTo.add(newDeathsListFromTheBeginning);
             }
         }
-        if (option.equals("c")){
-            for (ArrayList<Data> i : listGroup){
+        if (option.equals("c")) {
+            for (ArrayList<Data> i : listGroup) {
                 ArrayList<Integer> newVaccinated = new ArrayList<>();
-                for (Data n : i){
+                ArrayList<Integer> newVaccinatedListFromTheBeginning = new ArrayList<>();
+                for (Data n : i) {
                     newVaccinated.add(n.getVaccinated());
                 }
                 metricList.add(newVaccinated);
+
+                Data lastDataOfGroup = i.get(i.size() - 1);
+                Data newlastDataOfGroup = new Data();
+                for (Data j : processedDataList) {
+                    if (j.getLocalDate().equals(lastDataOfGroup.getLocalDate())
+                            && j.getLocation().equals(lastDataOfGroup.getLocation())) {
+                        newlastDataOfGroup = new Data(j);
+                    }
+                }
+                for (Data j : processedDataList) {
+
+                    if (j.getLocation().equals(lastDataOfGroup.getLocation()) &&
+                            processedDataList.indexOf(j) <= processedDataList.indexOf(newlastDataOfGroup.data)) {
+                        newVaccinatedListFromTheBeginning.add(j.getNewCases());
+                    }
+                }
+                metricListForUpTo.add(newVaccinatedListFromTheBeginning);
             }
         }
     }

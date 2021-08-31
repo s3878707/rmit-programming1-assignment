@@ -6,13 +6,63 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TimeRange {
-
+    Scanner sc = new Scanner(System.in);
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    private ArrayList<String> arr = new ArrayList<>();
-
-    public TimeRange(String start, String end) {
-        LocalDate startDay = convertStringToLocaleDate(start, startDayError());
-        LocalDate endDay = convertStringToLocaleDate(end, endDayError());
+    private ArrayList<String> listOfDate = new ArrayList<>();
+    public TimeRange(){};
+    public TimeRange( int option) {
+        if (option == 1) {
+            System.out.println("\nENTER THE START DAY: (MM/DD/YYYY) ");
+            String start = sc.nextLine();
+            LocalDate startDay = convertStringToLocaleDate(start);
+            System.out.println("\nENTER THE END DAY:   (MM/DD/YYYY) ");
+            String end = sc.nextLine();
+            LocalDate endDay = convertStringToLocaleDate(end);
+            listOfDate = executeDate(startDay, endDay);
+        }
+        if (option == 2) {
+            System.out.print("""
+                    CHOOSE THE  OPTION WEEKS OR DAYS
+                    \ta---WEEKS
+                    \tb---DAYS
+                    >>>""");
+            String choice = sc.nextLine();
+            while (!choice.equals("a")&&!choice.equals("b")) {
+                System.out.println("PLEASE ENTER THE VALID OPTION");
+                choice = sc.nextLine();
+            }
+            System.out.println("\nENTER THE START DAY:\n");
+            String start = sc.nextLine();
+            LocalDate startDay = convertStringToLocaleDate(start);
+            System.out.println("\nPLEASE ENTER THE RANGE:");
+            int range = Integer.parseInt(sc.nextLine());
+            String end = plusDaysOrWeeks(choice, startDay, range);
+            LocalDate endDay = convertStringToLocaleDate(end);
+            listOfDate = executeDate(startDay, endDay);
+        }
+        if (option == 3) {
+            System.out.print("""
+                    CHOOSE THE  OPTION WEEKS OR DAYS
+                    \ta---WEEKS
+                    \tb---DAYS
+                    >>>""");
+            String choice = sc.nextLine();
+            while (!choice.equals("a")&&!choice.equals("b")) {
+                System.out.println("PLEASE ENTER THE VALID OPTION");
+                choice = sc.nextLine();
+            }
+            System.out.println("\nENTER THE END DAY:\n");
+            String end = sc.nextLine();
+            LocalDate endDay = convertStringToLocaleDate(end);
+            System.out.println("\nPLEASE ENTER THE RANGE:");
+            int range = Integer.parseInt(sc.nextLine());
+            String start = minusDaysOrWeeks(choice, endDay, range);
+            LocalDate startDay = convertStringToLocaleDate(start);
+            listOfDate = executeDate(startDay, endDay);
+        }
+    }
+    private ArrayList<String> executeDate(LocalDate startDay, LocalDate endDay) {
+        ArrayList<String> listOfDate = new ArrayList<>();
         if (startDay.isAfter(endDay)){
             LocalDate trans = startDay;
             startDay = endDay;
@@ -26,71 +76,49 @@ public class TimeRange {
             if (b.charAt(0)=='0') {
                 b = b.replaceFirst("0","");
             }
-            arr.add(b);
+            listOfDate.add(b);
         }
+        return listOfDate;
     }
-    public TimeRange(){};
-    private static LocalDate convertStringToLocaleDate(String date, String Error) {
+
+    private LocalDate convertStringToLocaleDate(String date){
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
-        Scanner sc = new Scanner(System.in);
         while (!date.matches(regex)) {
-            System.out.println(Error);
+            System.out.println("PLEASE ENTER DATE AGAIN");
             date = sc.nextLine();
         }
         LocalDate localDate = LocalDate.parse(date, formatter);
         return localDate;
     }
-    public String minusDaysOrWeeks(String choice, String day, int range) {
-        LocalDate date = convertStringToLocaleDate(day, DayError());
+    private String minusDaysOrWeeks(String choice, LocalDate day, int range) {
         String stringDayAfterProcess = new String();
-        switch (choice) {
-            case "a":
-                LocalDate dayAfterProcess = date.minusWeeks(range);
-                stringDayAfterProcess = dayAfterProcess.format(formatter);
-                break;
-            case "b":
-                dayAfterProcess = date.minusDays(range);
-                stringDayAfterProcess = dayAfterProcess.format(formatter);
-                break;
-            default:
-                System.out.println("Please enter the right choice");
-                break;
-        }
+            switch (choice) {
+                case "a":
+                    LocalDate dayAfterProcess = day.minusWeeks(range);
+                    stringDayAfterProcess = dayAfterProcess.format(formatter);
+                    break;
+                case "b":
+                    dayAfterProcess = day.minusDays(range);
+                    stringDayAfterProcess = dayAfterProcess.format(formatter);
+                    break;
+            }
         return stringDayAfterProcess;
     }
-    public String plusDaysOrWeeks(String choice, String day, int range) {
-        LocalDate date = convertStringToLocaleDate(day, DayError());
+    private String plusDaysOrWeeks(String choice, LocalDate day, int range) {
         String afterProcess = new String();
-        switch (choice) {
-            case "a":
-                LocalDate dayAfterProcess = date.plusWeeks(range);
-                afterProcess = dayAfterProcess.format(formatter);
-                break;
-            case "b":
-                dayAfterProcess = date.plusDays(range);
-                afterProcess = dayAfterProcess.format(formatter);
-                break;
-            default:
-                System.out.println("Please enter the right choice");
-                break;
-        }
+            switch (choice) {
+                case "a":
+                    LocalDate dayAfterProcess = day.plusWeeks(range);
+                    afterProcess = dayAfterProcess.format(formatter);
+                    break;
+                case "b":
+                    dayAfterProcess = day.plusDays(range);
+                    afterProcess = dayAfterProcess.format(formatter);
+                    break;
+            }
         return afterProcess;
     }
-    public static String DayError() {
-        return "please enter day again";
-    }
-    public static String startDayError() {
-        return "Please enter start day again:";
-    }
-
-    public static String endDayError() {
-        return "Please enter end day again:";
-    }
-    public ArrayList<String> getArr(){
-        return arr;
-    }
-
-    public static void main(String[] args) {
-
+    public ArrayList<String> getListOfDate(){
+        return listOfDate;
     }
 }
