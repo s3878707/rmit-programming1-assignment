@@ -1,7 +1,6 @@
 package Data;
-
 import CSVData.CSVdata;
-import Data.*;
+
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -13,37 +12,52 @@ public class Geo {
     public Geo() {
     }
 
-    ;
 
     public Geo(String continent, String country) {
         this.continent = continent;
         this.country = country;
     }
 
-    private ArrayList<String> listOfRegion(String dataType) throws FileNotFoundException {
+    /**
+     * To have a list of country or location where a country appears only once, the same with location
+     * @param dataType
+     * @return
+     * @throws FileNotFoundException
+     */
+    private HashSet<String> listOfRegion(String dataType) throws FileNotFoundException {
         CSVdata list = new CSVdata();
         HashSet<String> set = new HashSet<>();
-        ArrayList<String> arr = new ArrayList<>();
         for (HashMap<String, String> i : list.getCsvData()) {
             if (!i.get(dataType).equals("")) {
                 set.add(i.get(dataType));
             }
         }
-        for (String i : set){
-            arr.add(i);
-        }
-        return arr;
+        return set;
     }
 
     public ArrayList<String> makeLocationList() throws FileNotFoundException{
-        ArrayList<String> listLocation = listOfRegion("location");
+        ArrayList<String> listLocation = new ArrayList<>();
+        for (String i : listOfRegion("location")){
+            listLocation.add(i);
+        }
         listLocation.sort(new SortPlaceByAlphabet());
         return listLocation;
     }
     public ArrayList<String> makeContinentList() throws FileNotFoundException{
-        ArrayList<String> listLocation = listOfRegion("continent");
-        listLocation.sort(new SortPlaceByAlphabet());
-        return listLocation;
+        ArrayList<String> listContinent = new ArrayList<>();
+        for (String i : listOfRegion("continent")){
+            listContinent.add(i);
+        }
+        listContinent.sort(new SortPlaceByAlphabet());
+        return listContinent;
+    }
+    public  String printErrorWhenUserEnterWrong(String data, String datatype) throws FileNotFoundException{
+        Scanner sc = new Scanner(System.in);
+        while (!listOfRegion(datatype).contains(data)) {
+            System.out.print("Write down the input again >>>>>>>");
+            data = sc.nextLine().trim();
+        }
+        return data;
     }
     public String getCountry(){
         return country;

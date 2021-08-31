@@ -24,7 +24,7 @@ public class main {
         }
         System.out.print("\nWrite down the continent here >>>>>>>");
         String continent = sc.nextLine().trim();
-        continent = csvData.printErrorWhenUserEnterWrong(continent, "continent");
+        continent = geo.printErrorWhenUserEnterWrong(continent, "continent");
 
         //Let the user choose the country
         System.out.println("Choose the country");
@@ -45,7 +45,7 @@ public class main {
         System.out.print("\nWrite down the country here >>>>>>>");
         System.out.println("Quang");
         String country = sc.nextLine().trim();
-        country = csvData.printErrorWhenUserEnterWrong(country, "location");
+        country = geo.printErrorWhenUserEnterWrong(country, "location");
 
         geo = new Geo(continent, country);
 
@@ -68,13 +68,13 @@ public class main {
             switch (dataOption) {
                 case "a":
 
-                    arrOfTime = new TimeRange(1);
+                    arrOfTime = new TimeRange(dataOption);
                     break;
                 case "b":
-                    arrOfTime = new TimeRange(2);
+                    arrOfTime = new TimeRange(dataOption);
                     break;
                 case "c":
-                    arrOfTime = new TimeRange(3);
+                    arrOfTime = new TimeRange(dataOption);
                     break;
                 default:
                     System.out.println("PLEASE CHOOSE AGAIN");
@@ -91,7 +91,7 @@ public class main {
             System.out.println(i);
         }
 
-        Results result = new Results(metric,"b",gr);
+        Results result = new Results(metric,"b");
         for (Integer i : result.getResults()){
             System.out.println(i);
         }

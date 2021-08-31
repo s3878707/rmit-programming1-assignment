@@ -10,8 +10,16 @@ public class TimeRange {
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private ArrayList<String> listOfDate = new ArrayList<>();
     public TimeRange(){};
-    public TimeRange( int option) {
-        if (option == 1) {
+
+    /**
+     * Option a : Enter start day and end day
+     * Option b :  Number of days or weeks after start date
+     * Option c : Number of days or weeks before end date
+     * @param option
+     */
+    public TimeRange( String option) {
+        // Option a
+        if (option.equals("a")) {
             System.out.println("\nENTER THE START DAY: (MM/DD/YYYY) ");
             String start = sc.nextLine();
             LocalDate startDay = convertStringToLocaleDate(start);
@@ -20,7 +28,8 @@ public class TimeRange {
             LocalDate endDay = convertStringToLocaleDate(end);
             listOfDate = executeDate(startDay, endDay);
         }
-        if (option == 2) {
+        //Option b
+        if (option.equals("b")) {
             System.out.print("""
                     CHOOSE THE  OPTION WEEKS OR DAYS
                     \ta---WEEKS
@@ -40,7 +49,8 @@ public class TimeRange {
             LocalDate endDay = convertStringToLocaleDate(end);
             listOfDate = executeDate(startDay, endDay);
         }
-        if (option == 3) {
+        //Option c
+        if (option.equals("c")) {
             System.out.print("""
                     CHOOSE THE  OPTION WEEKS OR DAYS
                     \ta---WEEKS
@@ -61,18 +71,30 @@ public class TimeRange {
             listOfDate = executeDate(startDay, endDay);
         }
     }
+
+    /**
+     * Make  a string list of day when all conditions are met
+     * @param startDay
+     * @param endDay
+     * @return
+     */
     private ArrayList<String> executeDate(LocalDate startDay, LocalDate endDay) {
         ArrayList<String> listOfDate = new ArrayList<>();
+        // check if start day is before end day
         if (startDay.isAfter(endDay)){
             LocalDate trans = startDay;
             startDay = endDay;
             endDay = trans;
         }
         for (LocalDate d = startDay; !d.isAfter(endDay); d = d.plusDays(1)) {
+            // because LocalDate is formatted MM/dd/yyyy
+            // make it looks like the day in the csv file which is benefits for storing data
             String b = d.format(formatter);
+            // remove the 0 before day
             if (b.charAt(3)=='0'){
                 b = b.substring(0,3) + b.substring(4);
             }
+            // remove the 0 before month
             if (b.charAt(0)=='0') {
                 b = b.replaceFirst("0","");
             }
@@ -81,6 +103,11 @@ public class TimeRange {
         return listOfDate;
     }
 
+    /**
+     * This method will convert String type to LocalDate type in order to calculate which related to time
+     * @param date
+     * @return
+     */
     private LocalDate convertStringToLocaleDate(String date){
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
         while (!date.matches(regex)) {

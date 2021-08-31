@@ -8,24 +8,36 @@ public class Group {
     Scanner sc = new Scanner(System.in);
     private ArrayList<ArrayList<Data>> grouping = new ArrayList<>();
     public Group (){}
+
+    /**
+     * Option a : No grouping
+     * Option b : number of groups (divide data into that number of groups)
+     * Option c :  number of days (divide data into groups so that each group contains number of days)
+     * @param data
+     * @param option
+     */
     public Group(Database data, String option) {
         ArrayList<Data> listData = data.getSelectedData();
         int size = listData.size();
+        // no grouping
         if (option.equals("a"))
             for (Data i : listData){
                 ArrayList<Data> groupContainOneData = new ArrayList<>();
                 groupContainOneData.add(i);
                 grouping.add(groupContainOneData);
             }
+        // number of groups
         if (option.equals("b")){
             System.out.println("ENTER NUMBER OF GROUPS:");
             int numberOfGroup = sc.nextInt();
             while (numberOfGroup>listData.size()) {
-                System.out.println("THE NUMBER OF GROUPS MUST SMALLER THAN THE NUMBER OF DATAS:");
+                System.out.println("THE NUMBER OF GROUPS MUST SMALLER THAN THE NUMBER OF DATA:");
                 numberOfGroup = sc.nextInt();
             }
             int[] groupSize = new int[numberOfGroup];
             int i = 0;
+            // Make a list of integer which stands for the maximum each groups can contains
+            // For example: [3,2,2] means first group has 3 data, second group has 2 data and so on
             while (size!=0){
                 groupSize[i]+=1;
                 i++;

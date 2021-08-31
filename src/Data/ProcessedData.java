@@ -8,10 +8,16 @@ import java.util.HashMap;
 
 public class ProcessedData{
     private ArrayList<Data> processedData = new ArrayList<>();
+
+    /**
+     * Make a list of Data which the people vaccinated column are converted to newVaccinated
+     * @throws FileNotFoundException
+     */
     public ProcessedData() throws FileNotFoundException {
         CSVdata data = new CSVdata();
         ArrayList<HashMap<String, String>> csvData = data.getCsvData();
         HashMap<String,String> firstMap = csvData.get(0);
+        // add the very first data
         processedData.add(new Data(
                 firstMap.get("continent"),
                 firstMap.get("location"),
@@ -33,6 +39,7 @@ public class ProcessedData{
                         Integer.toString(calculateNewVaccinated(previousMap, currentMap))
                 ));
             }else {
+                // Copy the same data from csv file when adding the first data of new country
                 processedData.add(new Data(
                         currentMap.get("continent"),
                         currentMap.get("location"),
@@ -44,6 +51,7 @@ public class ProcessedData{
             }
         }
     }
+
 
     private Integer calculateNewVaccinated(HashMap<String,String> previousMap, HashMap<String,String> currentMap) {
         String currentMapPpVaccinated;

@@ -6,8 +6,16 @@ import java.util.ArrayList;
 
 public class Results {
     private ArrayList<Integer> results = new ArrayList<>();
-    public Results(Metric metric, String option, Group group) {
+    public  Results(){}
 
+    /**
+     * Option a : New Total
+     * Option b : Up To
+     * Get the specific list from the metric depends on option that user chooses
+     * @param metric
+     * @param option
+     */
+    public Results(Metric metric, String option) {
         if (option.equals("a")) {
             ArrayList<ArrayList<Integer>> metricList = metric.getMetricList();
             for (ArrayList<Integer> i : metricList) {

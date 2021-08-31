@@ -11,267 +11,146 @@ import java.io.FileNotFoundException;
 import java.util.*;
 public class userInterface {
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner fileOption = new Scanner(System.in);
+
         System.out.println("COVID TRACKER");
-        System.out.println("PRESS ENTER TO CONTINUE");
+        System.out.println("**************************************************************************************");
         CSVdata csvData = new CSVdata();
         Database database = new Database();
+        Results results = new Results();
         Geo geo = new Geo();
         TimeRange arrOfTime = new TimeRange();
         Group gr = new Group();
         Metric metric = new Metric();
-        //Let the user choose the continent
-//        public static void mainMenu() {
-        int menuOption;
-        do {
-            System.out.println("**************************");
-            System.out.println("|     WORKING PROCESS     |");
-            System.out.println("|    1.STEP [1]: DATA     |");
-            System.out.println("|    2.STEP [2]: SUMMARY  |");
-            System.out.println("|    3.STEP [3]: DISPLAY  |");
-            System.out.println("|    4.OPTION[4]: EXIT    |");
-            System.out.println("***************************");
-            System.out.print("PLEASE ENTER 1 TO CONTINUE:");
-            Scanner sc = new Scanner(System.in);
-            menuOption = sc.nextInt();
-            if (menuOption == 4) {
-                return;
-            } else {
 
-                //*********************another scanner need to ask*********************//
-//            switch (menuOption) {
-//                case 1:
-                System.out.println("YOUR FIRST STEP IS 1: DATA\n");
-                System.out.println("**************************************************************************************");
-                System.out.println("                        HERE ARE THE CONTINENTS:                        ");
+        String menuOption;
+        System.out.print("DO YOU WANT TO CONTINUE ? (Y/N)");
+        Scanner sc = new Scanner(System.in);
+        menuOption = sc.nextLine();
+        while (menuOption.equals("y") || menuOption.equals("Y")) {
 
-                ArrayList<String> continentList = geo.makeContinentList();
-                int n=1;
-                for (String i : continentList) {
-                    System.out.printf("%3d - %-10s", n, i);
-                    n++;
-                }
-                System.out.println("\n**************************************************************************************");
+//        if (menuOption.equals("n") || menuOption.equals("N")) {
+//            System.out.println("EXIT ....");
+//            return;
+//        } else {
+            String menuChoice;
+            //Let the user choose the continents
+            System.out.println("YOUR FIRST STEP IS 1: DATA\n");
+            System.out.println("**************************************************************************************");
+            System.out.println("                        HERE ARE THE CONTINENTS:                        ");
 
-                System.out.print("\n\nPLEASE WRITE THE CONTINENT NAME:  \n\n");
-                String continent = fileOption.nextLine().trim();
-                continent = csvData.printErrorWhenUserEnterWrong(continent, "continent");
-
-                //Let the user choose the country:
-                System.out.println("**************************************************************************************");
-                System.out.println("*                              Please choose the Country:                            *");
-                System.out.println("**************************************************************************************");
-                ArrayList<String> countryList = geo.makeLocationList();
-                n = 1;
-                for (String country : countryList) {
-                    if (csvData.checkIfDataContainsNextData(country, continent)) {
-                        if (n % 3 != 0) {
-                            System.out.printf("%3d - %s", n, String.format("%-40s", country));
-                            n++;
-                        } else {
-                            System.out.printf("%3d - %s\n", n, String.format("%-40s", country));
-                            n++;
-                        }
-                    }
-                }
-                //ask the user to enter the country name again
-                System.out.print("\n ENTER YOUR COUNTRY HERE: \n");
-                String country = fileOption.nextLine().trim();
-                country = csvData.printErrorWhenUserEnterWrong(country, "location");
-
-                geo = new Geo(continent, country);
-
-                String dataOption;
-                do {
-                    System.out.println("");
-                    System.out.println("                                       DATA                                           ");
-                    System.out.println("**************************************************************************************");
-                    System.out.println("*********************** PLEASE CHOOSE OPTION YOU WANT TO APPLY ***********************");
-                    System.out.println("|   1. Data -> Option [a]: Enter the start date and end date (inclusive)             |");
-                    System.out.println("|   2. Data -> Option [b]: A number of days or weeks from a particular date          |");
-                    System.out.println("|   3. Data -> Option [c]: A number of days or weeks to a particular date            |");
-//                    System.out.println("|   4. Data -> Option [d]: Back to the main menu                                     |");
-                    System.out.println("**************************************************************************************");
-                    System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
-                    dataOption = sc.next();
-                    switch (dataOption) {
-                        case "a":
-
-                            arrOfTime = new TimeRange(1);
-                            break;
-                        case "b":
-                            arrOfTime = new TimeRange(2);
-                            break;
-                        case "c":
-                            arrOfTime = new TimeRange(3);
-                            break;
-                        default:
-                            System.out.println("PLEASE CHOOSE AGAIN");
-                    }
-                } while (!dataOption.equals("a")&&!dataOption.equals("b")&&!dataOption.equals("c")) ;
-                System.out.println("DATA IS RECORDED SUCCESSFULLY, PLEASE CONTINUE WITH STEP 2");
-                database = new Database(geo, arrOfTime);
-                System.out.println("YOUR SECOND STEP IS 2:SUMMARY:");
-                String summOption;
-
-                do {
-                    System.out.println("|                                    SUMMARY                                         |");
-                    System.out.println("**************************************************************************************");
-                    System.out.println("*********************** PLEASE CHOOSE OPTION YOU WANT TO APPLY ***********************");
-                    System.out.println("|   1. SUM -> STEP 1 [a]: GROUPING DATA                                              |");
-                    System.out.println("|   2. SUM -> STEP 2 [b]: METRIC                                                     |");
-                    System.out.println("|   3. SUM -> STEP 3 [c]: RESULT                                                     |");
-//                    System.out.println("|   4. SUM -> STEP 4 [d]: BACK TO PROGRESS                                           |");
-                    System.out.println("**************************************************************************************");
-                    System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c, d");
-
-                    summOption = fileOption.next();
-//                    switch (summOption) {
-//                        case "a":
-                            System.out.println("YOUR CHOICE IS [a]: GROUPING DATA ");
-                            String groupingOp;
-                            do {
-                                System.out.println("");
-                                System.out.println("|                                 SUMMARY GROUPING DATA                              |");
-                                System.out.println("**************************************************************************************");
-                                System.out.println("|   1. GROUPING DATA -> OPTION [1]: NO GROUPING                                      |");
-                                System.out.println("|   2. GROUPING DATA -> OPTION [2]: NUMBER OF GROUPS                                 |");
-                                System.out.println("|   3. GROUPING DATA -> OPTION [3]: NUMBER OF DAYS                                   |");
-//                                System.out.println("|   4. GROUPING DATA -> OPTION [4]: BACK TO THE PROCESS                              |");
-                                System.out.println("**************************************************************************************");
-                                System.out.println("CHOOSE YOUR OPTION THROUGH 1, 2, 3, 4");
-                                groupingOp = fileOption.next();
-                                switch (groupingOp) {
-                                    case "1":
-                                        System.out.println("NO GROUPING:");
-                                        gr = new Group(database, "a");
-                                        for (ArrayList<Data> i : gr.getGrouping()) {
-                                            System.out.println(i);
-                                        }
-                                        groupingOp = "4";
-                                        break;
-                                    case "2":
-                                        System.out.println("NUMBER OF GROUPS:");
-                                        gr = new Group(database, "b");
-                                        for (ArrayList<Data> i : gr.getGrouping()) {
-                                            System.out.println(i);
-                                        }
-                                        groupingOp = "4";
-                                        break;
-                                    case "3":
-                                        System.out.println("NUMBER OF DAYS");
-                                        gr = new Group(database, "c");
-                                        for (ArrayList<Data> i : gr.getGrouping()) {
-                                            System.out.println(i);
-                                        }
-                                        groupingOp = "4";
-                                        break;
-                                    case "4":
-                                        groupingOp = "4";
-                                        break;
-                                    default:
-                                        System.out.println("UNAVAILABLE");
-                                        break;
-                                }
-                            } while (!groupingOp.equals("4"));
-//                            break;
-//                        case "b":
-                            System.out.println("METRIC");
-                            String metOp;
-                            do {
-                                System.out.println("");
-                                System.out.println("|                                 SUMMARY METRIC                                     |");
-                                System.out.println("**************************************************************************************");
-                                System.out.println("|   1. METRIC -> OPTION [1]: POSITIVE CASES                                          |");
-                                System.out.println("|   2. METRIC -> OPTION [2]: DEATHS                                                  |");
-                                System.out.println("|   3. METRIC -> OPTION [3]: VACCINATED PEOPLE                                       |");
-//                                System.out.println("|   4. METRIC -> OPTION [4]: BACK TO THE PROCESS                                     |");
-                                System.out.println("**************************************************************************************");
-                                System.out.println("CHOOSE YOUR OPTION THROUGH 1, 2, 3, 4");
-                                metOp = fileOption.next();
-                                switch (metOp) {
-                                    case "1":
-                                        System.out.println("POSITIVE CASES");
-                                        metric = new Metric(gr, "a");
-                                        for (ArrayList<Integer> i : metric.getMetricListForUpTo()) {
-                                            System.out.println(i);
-                                        }
-                                        metOp = "4";
-                                        break;
-                                    case "2":
-                                        System.out.println("DEATHS");
-                                        metric = new Metric(gr, "b");
-                                        for (ArrayList<Integer> i : metric.getMetricListForUpTo()) {
-                                            System.out.println(i);
-                                        }
-                                        metOp = "4";
-                                        break;
-                                    case "3":
-                                        System.out.println("VACCINATED PEOPLE");
-                                        metric = new Metric(gr, "c");
-                                        for (ArrayList<Integer> i : metric.getMetricListForUpTo()) {
-                                            System.out.println(i);
-                                        }
-                                        metOp = "4";
-                                        break;
-//                                    case "4":
-//                                        metOp = "4";
-//                                        break;
-//                                    default:
-//                                        System.out.println("UNAVAILABLE");
-//                                        break;
-                                }
-                            } while (!metOp.equals("4"));
-//                            break;
-//                        case "c":
-                            System.out.println("RESULT");
-                            String reOp;
-                            do {
-                                System.out.println("");
-                                System.out.println("|                                 SUMMARY RESULT                                     |");
-                                System.out.println("**************************************************************************************");
-                                System.out.println("|   1. RESULT -> OPTION [1]: NEW TOTAL                                               |");
-                                System.out.println("|   2. RESULT -> OPTION [2]: UP TO                                                   |");
-                                System.out.println("|   3. RESULT -> OPTION [3]: BACK TO THE PROCESS                                     |");
-                                System.out.println("**************************************************************************************");
-                                System.out.println("CHOOSE YOUR OPTION THROUGH 1, 2, 3, 4");
-                                reOp = fileOption.next();
-                                switch (reOp) {
-                                    case "1":
-                                        System.out.println("NEW TOTAL");
-                                        Results results = new Results(metric, "a", gr);
-                                        for (Integer i : results.getResults()) {
-                                            System.out.println(i);
-                                        }
-                                        break;
-                                    case "2":
-                                        System.out.println("UP TO");
-                                        results = new Results(metric, "b", gr);
-                                        for (Integer i : results.getResults()) {
-                                            System.out.println(i);
-                                        }
-                                        break;
-                                    case "3":
-                                        reOp = "4";
-                                        break;
-                                    default:
-                                        System.out.println("UNAVAILABLE");
-                                        break;
-                                }
-                            } while (!reOp.equals("4"));
-                            break;
-
-                } while (!summOption.equals("d"));
-//                case 4:
-//                    System.out.println("EXIT");
-//                    break;
-//                default:
-//                    System.out.println("INVALID OPTION !");
+            ArrayList<String> continentList = geo.makeContinentList();
+            int n = 1;
+            for (String i : continentList) {
+                System.out.printf("%3d - %-10s", n, i);
+                n++;
             }
+            System.out.println("\n**************************************************************************************");
+
+            System.out.print("\n\nPLEASE WRITE THE CONTINENT NAME:  \n\n");
+            String continent = sc.nextLine().trim();
+            continent = geo.printErrorWhenUserEnterWrong(continent, "continent");
+
+            //Let the user choose the country:
+            System.out.println("**************************************************************************************");
+            System.out.println("*                              Please choose the Country:                            *");
+            System.out.println("**************************************************************************************");
+            ArrayList<String> countryList = geo.makeLocationList();
+            n = 1;
+            for (String country : countryList) {
+                if (csvData.checkIfDataContainsNextData(country, continent)) {
+                    if (n % 3 != 0) {
+                        System.out.printf("%3d - %s", n, String.format("%-40s", country));
+                        n++;
+                    } else {
+                        System.out.printf("%3d - %s\n", n, String.format("%-40s", country));
+                        n++;
+                    }
+                }
+            }
+            //ask the user to enter the country name again
+            System.out.print("\n ENTER YOUR COUNTRY HERE: \n");
+            String country = sc.nextLine().trim();
+            country = geo.printErrorWhenUserEnterWrong(country, "location");
+
+            geo = new Geo(continent, country);
+
+            String dataOption;
+            do {
+                System.out.println("");
+                System.out.println("                                     DATE RANGE                                       ");
+                System.out.println("**************************************************************************************");
+                System.out.println("*********************** PLEASE CHOOSE OPTION YOU WANT TO APPLY ***********************");
+                System.out.println("|   1. Data -> Option [a]: Enter the start date and end date (inclusive)             |");
+                System.out.println("|   2. Data -> Option [b]: A number of days or weeks from a particular date          |");
+                System.out.println("|   3. Data -> Option [c]: A number of days or weeks to a particular date            |");
+                System.out.println("**************************************************************************************");
+                System.out.println("\n\n CHOOSE YOUR OPTION THROUGH  a, b, c");
+                dataOption = sc.next();
+                arrOfTime = new TimeRange(dataOption);
+            } while (!dataOption.equals("a") && !dataOption.equals("b") && !dataOption.equals("c"));
+            System.out.println("DATA IS RECORDED SUCCESSFULLY, PLEASE CONTINUE WITH STEP 2");
+            database = new Database(geo, arrOfTime);
+            //            System.out.println("YOUR SECOND STEP IS 2:SUMMARY:");
+            //            System.out.println("|                                    SUMMARY                                         |");
+            //            System.out.println("**************************************************************************************");
+            //            System.out.println("|   1. SUM -> STEP 1 : GROUPING DATA                                              |");
+            //            System.out.println("|   2. SUM -> STEP 2 : METRIC                                                     |");
+            //            System.out.println("|   3. SUM -> STEP 3 : RESULT                                                     |");
+            //            System.out.println("**************************************************************************************");
+            //            System.out.println("PRESS 1 TO CONTINUE");
+
+            //Let the user choose option to devide group
+            System.out.println("*******************GROUPING DATA*******************");
+            String groupingOp;
+            do {
+                System.out.println("");
+                System.out.println("|                                 SUMMARY GROUPING DATA                              |");
+                System.out.println("**************************************************************************************");
+                System.out.println("|   1. GROUPING DATA -> OPTION [a]: NO GROUPING                                      |");
+                System.out.println("|   2. GROUPING DATA -> OPTION [b]: NUMBER OF GROUPS                                 |");
+                System.out.println("|   3. GROUPING DATA -> OPTION [c]: NUMBER OF DAYS                                   |");
+                System.out.println("**************************************************************************************");
+                System.out.println("CHOOSE YOUR OPTION THROUGH a,b,c");
+                groupingOp = sc.next();
+                gr = new Group(database, groupingOp);
+            } while (!groupingOp.equals("a") && !groupingOp.equals("b") && !groupingOp.equals("c"));
+
+            //Let the user choose the metric
+            System.out.println("*******************METRIC*******************");
+            String metOp;
+            do {
+                System.out.println("");
+                System.out.println("|                                 SUMMARY METRIC                                     |");
+                System.out.println("**************************************************************************************");
+                System.out.println("|   1. METRIC -> OPTION [a]: POSITIVE CASES                                          |");
+                System.out.println("|   2. METRIC -> OPTION [b]: DEATHS                                                  |");
+                System.out.println("|   3. METRIC -> OPTION [c]: VACCINATED PEOPLE                                       |");
+                System.out.println("**************************************************************************************");
+                System.out.println("CHOOSE YOUR OPTION THROUGH a, b, c");
+                metOp = sc.next();
+                metric = new Metric(gr, metOp);
+            } while (!metOp.equals("a") && !metOp.equals("b") && !metOp.equals("c"));
+
+            //Let the user choose the results want to display
+            System.out.println("*******************RESULT*******************");
+            String reOp;
+            do {
+                System.out.println("");
+                System.out.println("|                                 SUMMARY RESULT                                     |");
+                System.out.println("**************************************************************************************");
+                System.out.println("|   1. RESULT -> OPTION [a]: NEW TOTAL                                               |");
+                System.out.println("|   2. RESULT -> OPTION [b]: UP TO                                                   |");
+                System.out.println("|   3. RESULT -> OPTION [c]: BACK TO THE PROCESS                                     |");
+                System.out.println("**************************************************************************************");
+                System.out.println("CHOOSE YOUR OPTION THROUGH a, b, c");
+                reOp = sc.next();
+                results = new Results(metric, reOp);
+            } while (!reOp.equals("a") && !reOp.equals("b") && !reOp.equals("c"));
+            System.out.println("CONTINUE ? (Y/N)");
+            menuOption = sc.nextLine();
+//        } while (!menuOption.equals("n") && !menuOption.equals("N"));
         }
-        while (menuOption != 4);
-
-
     }
 }
+
 

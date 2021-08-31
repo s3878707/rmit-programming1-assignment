@@ -17,16 +17,19 @@ public class Data {
         this.location = location;
         this.localDate = localDate;
         if (newCases == null||newCases.equals("")) {
+            // set the newCases to 0 if in csv file, there is a null or space
             this.newCases = 0;
         } else {
             this.newCases = Integer.parseInt(newCases);
         }
         if (newDeaths == null || newDeaths.equals("")) {
+            // set the newDeaths to 0 if in csv file, there is a null or space
             this.newDeaths = 0;
         } else {
             this.newDeaths = Integer.parseInt(newDeaths);
         }
         if (newVaccinated == null|| newVaccinated.equals("")) {
+            // set the newVaccinated to 0 if in csv file, there is a null or space
             this.vaccinated = 0;
         } else {
             this.vaccinated = Integer.parseInt(newVaccinated);
