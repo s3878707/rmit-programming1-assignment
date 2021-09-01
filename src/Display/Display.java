@@ -271,8 +271,9 @@ public class Display {
         ArrayList<String> labelConversion = new ArrayList<>();
         SimpleDateFormat obj = new SimpleDateFormat("MM/dd/yyyy");
         if (resultType.equals("up_to")){
-            for (int i = 0; i < label.size(); i++) {
-                String labelFormat = obj.format(label.get(i).get(0))+" - "+obj.format(label.get(i).get(label.get(i).size()-1));
+            for (ArrayList<String> i : metric.getDateListForUpTo()) {
+
+                String labelFormat = i.get(0) + "-" + i.get(i.size()-1);
                 labelConversion.add(labelFormat);
             }
             System.out.println();
@@ -286,14 +287,21 @@ public class Display {
             System.out.println("*************************************");
             System.out.println();
         }else if (resultType.equals("new_total")){
-            String labelFormat = obj.format(label.get(0).get(0))+" - "+obj.format(label.get(label.size()-1).get(label.get(label.size()-1).size()-1));
-            labelConversion.add(labelFormat);
+//            String labelFormat = obj.format(label.get(0).get(0))+" - "+obj.format(label.get(label.size()-1).get(label.get(label.size()-1).size()-1));
+            for (ArrayList<String> i : metric.getDateList()){
+                String labelFormat = i.get(0) + "-" + i.get(i.size()-1);
+                labelConversion.add(labelFormat);
+            }
+
             System.out.println();
             System.out.println("*****************************************");
-            System.out.print("*\t");
-            System.out.print(labelFormat+"\t|\t"+data[0]);
-            System.out.print("\t*");
-            System.out.println();
+
+            for (int i = 0; i < labelConversion.size(); i++) {
+                System.out.print("*\t");
+                System.out.print(labelConversion.get(i)+"\t|\t"+data[i]);
+                System.out.print("\t*");
+                System.out.println();
+            }
             System.out.println("*****************************************");
             System.out.println();
         }

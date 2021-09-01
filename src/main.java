@@ -1,5 +1,6 @@
 import CSVData.CSVdata;
 import Data.*;
+import Display.Display;
 import Summary.*;
 
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ public class main {
         System.out.println("Please enter the file");
         String path = sc.nextLine();
         CSVdata csvData = new CSVdata();
+        String resultOptionString = null;
 
 
         //Let the user choose a continent
@@ -95,6 +97,16 @@ public class main {
         for (Integer i : result.getResults()){
             System.out.println(i);
         }
+        resultOptionString = "new_total";
+        Display tableDisplay = new Display();
+        long[] totalCalculationReformat = new long[result.getResults().size()];
+        for (int i = 0; i < totalCalculationReformat.length; i++) {
+            totalCalculationReformat[i] = result.getResults().get(i);
+        }
+        System.out.println(Arrays.toString(totalCalculationReformat));
+        tableDisplay.tableDisplay(totalCalculationReformat,metric,resultOptionString);
+        System.out.println();
+
     }
 }
 
