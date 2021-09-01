@@ -24,7 +24,7 @@ public class userInterface {
         String menuOption;
         System.out.print("DO YOU WANT TO CONTINUE (Y/N) ? >>>");
         Scanner sc = new Scanner(System.in);
-        menuOption = sc.nextLine();
+        menuOption = sc.next();
         while (menuOption.equals("y") || menuOption.equals("Y")) {
             System.out.println("-".repeat(31)+"WELCOME TO COVID TRACKER"+"-".repeat(31));
             System.out.println("RUNNING .....");
@@ -37,7 +37,8 @@ public class userInterface {
                 n++;
             }
             System.out.print("\nWrite the continent here >>>>>>");
-            String continent = sc.nextLine().trim();
+            String continent = sc.next().trim();
+            //ask the user to enter the country name again
             continent = geo.printErrorWhenUserEnterWrong(continent, "continent");
 
             /*--------------Let the user choose the country--------------------------*/
@@ -57,10 +58,9 @@ public class userInterface {
                     }
                 }
             }
-
-            //ask the user to enter the country name again
             System.out.print("\nWrite down the country here >>>>>>");
-            String country = sc.nextLine().trim();
+            String country = sc.next().trim();
+            //ask the user to enter the country name again
             country = geo.printErrorWhenUserEnterWrong(country, "location");
             geo = new Geo(continent, country);
 
