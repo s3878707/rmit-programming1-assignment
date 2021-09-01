@@ -89,22 +89,19 @@ public class main {
             System.out.println(i);
         }
         Metric metric = new Metric(gr,"a");
-        for (ArrayList<Integer> i : metric.getMetricListForUpTo()){
+        for (ArrayList<Integer> i : metric.getMetricList()){
             System.out.println(i);
         }
 
-        Results result = new Results(metric,"b");
+        Results result = new Results(metric,"a");
         for (Integer i : result.getResults()){
             System.out.println(i);
         }
         resultOptionString = "new_total";
-        Display tableDisplay = new Display();
-        long[] totalCalculationReformat = new long[result.getResults().size()];
-        for (int i = 0; i < totalCalculationReformat.length; i++) {
-            totalCalculationReformat[i] = result.getResults().get(i);
-        }
-        System.out.println(Arrays.toString(totalCalculationReformat));
-        tableDisplay.tableDisplay(totalCalculationReformat,metric,resultOptionString);
+        Display display = new Display();
+        display.tableDisplay(result,metric,resultOptionString);
+
+        ;
         System.out.println();
 
     }

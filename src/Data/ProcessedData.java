@@ -76,4 +76,11 @@ public class ProcessedData{
     public ArrayList<Data> getProcessedData(){
         return processedData;
     }
+
+    public static void main(String[] args) throws  FileNotFoundException{
+        ProcessedData data = new ProcessedData();
+        for (Data i : data.getProcessedData()){
+            System.out.println(i);
+        }
+    }
 }

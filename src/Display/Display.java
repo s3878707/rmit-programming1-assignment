@@ -8,9 +8,9 @@
 //public class Display {
 //    public static void tabular(Group group, Metric metric, Results results) {
 //
-//        ArrayList<Integer> displayValue = query(group, metric, results);
+//        ArrayList<Integer> displayValue = query(results);
 //
-//        ArrayList<String> range = groupRange(group);
+//        ArrayList<String> range = groupRange(metric);
 //
 //        interface tableInterface {
 //            String cellWidthFirstCol(int width, String value);
@@ -75,7 +75,7 @@
 //        int horizontal = 80;
 //        int spacing;
 //        Character[][] displayChart = new Character[vertical][horizontal];
-//        ArrayList<Integer> displayValue = query(group, metric, results);
+//        ArrayList<Integer> displayValue = query(results);
 //        ArrayList<Integer> chartPositionValue = new ArrayList<>();
 //
 //        if (group.getGrouping().size() > 79) {
@@ -137,58 +137,15 @@
 //    }
 //
 //
-//    public static ArrayList<Integer> query(Group group, Metric metric, Results results) {
-//        ArrayList<ArrayList<Integer>> value = new ArrayList<>();
-//        for (int i = 0; i < group.getGrouping().size(); i++) {
-//            ArrayList<Integer> valueGroup = new ArrayList<>();
-//            for (int j = 0; j < group.getGrouping().get(i).size(); i++) {
-//                switch () {
-//                    case "a" -> {
-//                        int k = group.getGrouping().get(i).get(j).getNewCases();
-//                        valueGroup.add(k);
-//                    }
-//                    case "b" -> {
-//                        int k = group.getGrouping().get(i).get(j).getNewDeaths();
-//                        valueGroup.add(k);
-//                    }
-//                    case "c" -> {
-//                        int k = group.getGrouping().get(i).get(j).getVaccinated();
-//                        valueGroup.add(k);
-//                    }
-//                }
-//            }
-//            value.add(valueGroup);
-//        }
-//        ArrayList<Integer> displayValue = new ArrayList<>();
-//        int groupValue = 0;
-//        for (ArrayList<Integer> integers : value) {
-//            for (int j = 0; j < integers.size(); j++) {
-//                groupValue += integers.get(j);
-//                switch (results) {
-//                    //NEW TOTAL
-//                    case "a" -> {
-//                        if (j == integers.size() - 1) {
-//                            displayValue.add(groupValue);
-//                        }
-//                    }
-//                    //UP TO
-//                    case "b" -> {
-//                        if (j == integers.size() - 1) {
-//                            displayValue.add(groupValue);
-//                            groupValue = 0;
-//                        }
-//                    }
-//                }
-//            }
-//        }
+//    public static ArrayList<Integer> query( Results results) {
+//        ArrayList<Integer> displayValue = results.getResults();
 //        return displayValue;
 //    }
-//    public static ArrayList<String> groupRange(Group groupObject) {
-//        ArrayList<ArrayList<Data>> groups = groupObject.getGrouping();
+//    public static ArrayList<String> groupRange(Metric metric) {
 //        ArrayList<String> listOfRange = new ArrayList<>();
-//        for (ArrayList<Data> group : groups) {
-//            String startDay = group.get(0).getLocalDate();
-//            String endDay = group.get(group.size() - 1).getLocalDate();
+//        for (ArrayList<String> group : metric.getDateList()) {
+//            String startDay = group.get(0);
+//            String endDay = group.get(group.size() - 1);
 //            if (group.size() > 1) {
 //                listOfRange.add(startDay + "-" + endDay);
 //            } else {
@@ -200,11 +157,58 @@
 //}
 package Display;
 import Summary.Metric;
-
-import java.text.SimpleDateFormat;
+import Summary.Results;
 import java.util.*;
 
 public class Display {
+
+    public void tableDisplay(Results results, Metric metric, String resultType){
+        ArrayList<String> rangeList = new ArrayList<>();
+        if (resultType.equals("up_to")){
+            for (ArrayList<String> i : metric.getDateListForUpTo()) {
+                if (i.size() > 1) {
+                    String labelFormat = i.get(0) + "-" + i.get(i.size() - 1);
+                    rangeList.add(labelFormat);
+                }else {
+                    rangeList.add(i.get(0)+"\t\t");
+                }
+            }
+            System.out.println();
+            System.out.println("-".repeat(33));
+            System.out.println("\tRange"+"\t|\t"+"\tValue");
+            for (int i = 0; i < rangeList.size(); i++) {
+                System.out.print("|\t");
+                System.out.print(rangeList.get(i)+"\t|\t"+results.getResults().get(i));
+                System.out.print("\t|");
+                System.out.println();
+            }
+            System.out.println("-".repeat(33));
+            System.out.println();
+
+        }else if (resultType.equals("new_total")){
+            for (ArrayList<String> i : metric.getDateList()) {
+                if (i.size() > 1) {
+                    String labelFormat = i.get(0) + "-" + i.get(i.size() - 1);
+                    rangeList.add(labelFormat);
+                } else {
+                    rangeList.add(i.get(0)+"\t\t");
+                }
+            }
+            System.out.println();
+            System.out.println("-".repeat(33));
+            System.out.println("\t\t\tRange\t"+"\t|\s"+"Value");
+            System.out.println("-".repeat(33));
+
+            for (int i = 0; i < rangeList.size(); i++) {
+                System.out.print("|\t");
+                System.out.print(rangeList.get(i)+"\t|\t"+results.getResults().get(i));
+                System.out.print("\t|");
+                System.out.println();
+            }
+            System.out.println("-".repeat(33));
+            System.out.println();
+        }
+    }
     public void chartDisplay(long[] data){
         long[] sortedData = bubbleSort(data, "value", "descending");
         long[] sortedIndex = {3,2,4,5,1,6};
@@ -266,50 +270,6 @@ public class Display {
             }
             System.out.print("group"+i);
         }
-    }
-    public void tableDisplay(long[] data, Metric metric, String resultType){
-        ArrayList<String> labelConversion = new ArrayList<>();
-        SimpleDateFormat obj = new SimpleDateFormat("MM/dd/yyyy");
-        if (resultType.equals("up_to")){
-            for (ArrayList<String> i : metric.getDateListForUpTo()) {
-
-                String labelFormat = i.get(0) + "-" + i.get(i.size()-1);
-                labelConversion.add(labelFormat);
-            }
-            System.out.println();
-            System.out.println("*************************************");
-            for (int i = 0; i < labelConversion.size(); i++) {
-                System.out.print("*\t");
-                System.out.print(labelConversion.get(i)+"\t|\t"+data[i]);
-                System.out.print("\t*");
-                System.out.println();
-            }
-            System.out.println("*************************************");
-            System.out.println();
-        }else if (resultType.equals("new_total")){
-//            String labelFormat = obj.format(label.get(0).get(0))+" - "+obj.format(label.get(label.size()-1).get(label.get(label.size()-1).size()-1));
-            for (ArrayList<String> i : metric.getDateList()){
-                String labelFormat = i.get(0) + "-" + i.get(i.size()-1);
-                labelConversion.add(labelFormat);
-            }
-
-            System.out.println();
-            System.out.println("*****************************************");
-
-            for (int i = 0; i < labelConversion.size(); i++) {
-                System.out.print("*\t");
-                System.out.print(labelConversion.get(i)+"\t|\t"+data[i]);
-                System.out.print("\t*");
-                System.out.println();
-            }
-            System.out.println("*****************************************");
-            System.out.println();
-        }
-    }
-    public static void main(String[] args) {
-        long[] sampleData = {24,20,40,90,38,33,30,30,39,39};
-        Display first = new Display();
-        first.chartDisplay(sampleData);
     }
     static long[] bubbleSort(long[] originalArray, String returnType, String sortOrder) {
         long n = originalArray.length;

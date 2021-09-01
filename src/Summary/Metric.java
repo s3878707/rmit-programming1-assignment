@@ -89,7 +89,7 @@ public class Metric {
                 for (Data j : processedDataList) {
                     if (j.getLocation().equals(lastDataOfGroup.getLocation()) &&
                             processedDataList.indexOf(j) <= processedDataList.indexOf(newlastDataOfGroup.data)) {
-                        newDeathsListFromTheBeginning.add(j.getNewCases());
+                        newDeathsListFromTheBeginning.add(j.getNewDeaths());
                         dateListFromTheBeginning.add(j.getLocalDate());
                     }
                 }
@@ -124,7 +124,7 @@ public class Metric {
                 for (Data j : processedDataList) {
                     if (j.getLocation().equals(lastDataOfGroup.getLocation()) &&
                             processedDataList.indexOf(j) <= processedDataList.indexOf(newlastDataOfGroup.data)) {
-                        newVaccinatedListFromTheBeginning.add(j.getNewCases());
+                        newVaccinatedListFromTheBeginning.add(j.getVaccinated());
                         dateListFromTheBeginning.add(j.getLocalDate());
                     }
                 }

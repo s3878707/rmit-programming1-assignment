@@ -28,10 +28,10 @@ public class Group {
             }
         // number of groups
         if (option.equals("b")){
-            System.out.println("ENTER NUMBER OF GROUPS:");
+            System.out.print("Enter number of group >>>");
             int numberOfGroup = sc.nextInt();
             while (numberOfGroup>listData.size()) {
-                System.out.println("THE NUMBER OF GROUPS MUST SMALLER THAN THE NUMBER OF DATA:");
+                System.out.println("The number of groups must smaller than the number of data >>>");
                 numberOfGroup = sc.nextInt();
             }
             int[] groupSize = new int[numberOfGroup];
@@ -57,10 +57,10 @@ public class Group {
             }
         }
         if (option.equals("c")){
-            System.out.println("ENTER THE DAYS IN A GROUP");
+            System.out.print("Enter the number of days in a group >>>");
             int numberOfDays = sc.nextInt();
             while (size % numberOfDays != 0){
-                System.out.println("PLEASE ENTER THE VALID NUMBER OF DAYS");
+                System.out.print("The data must be devided equally in ever group >>>>");
                 numberOfDays = sc.nextInt();
             }
             int numberOfGroups = size/numberOfDays;

@@ -20,51 +20,51 @@ public class TimeRange {
     public TimeRange( String option) {
         // Option a
         if (option.equals("a")) {
-            System.out.println("\nENTER THE START DAY: (MM/DD/YYYY) ");
+            System.out.print("Enter the start day (format: MM/DD/YYYY) : ");
             String start = sc.nextLine();
             LocalDate startDay = convertStringToLocaleDate(start);
-            System.out.println("\nENTER THE END DAY:   (MM/DD/YYYY) ");
+            System.out.print("Enter the end day (format: MM/DD/YYYY) : ");
             String end = sc.nextLine();
             LocalDate endDay = convertStringToLocaleDate(end);
             listOfDate = executeDate(startDay, endDay);
         }
-        //Option b
+        //Option b : Choose a range from the date
         if (option.equals("b")) {
             System.out.print("""
-                    CHOOSE THE  OPTION WEEKS OR DAYS
-                    \ta---WEEKS
-                    \tb---DAYS
+                    choose the type of range:
+                    \tOption a: Weeks
+                    \tOption b: Days
                     >>>""");
             String choice = sc.nextLine();
             while (!choice.equals("a")&&!choice.equals("b")) {
-                System.out.println("PLEASE ENTER THE VALID OPTION");
+                System.out.print("Please enter the valid option >>>>>");
                 choice = sc.nextLine();
             }
-            System.out.println("\nENTER THE START DAY:\n");
+            System.out.print("Enter the start day (format: MM/DD/YYYY) : ");
             String start = sc.nextLine();
             LocalDate startDay = convertStringToLocaleDate(start);
-            System.out.println("\nPLEASE ENTER THE RANGE:");
-            int range = Integer.parseInt(sc.nextLine());
+            System.out.print("Please enter the range :");
+            int range = Integer.parseInt(sc.next());
             String end = plusDaysOrWeeks(choice, startDay, range);
             LocalDate endDay = convertStringToLocaleDate(end);
             listOfDate = executeDate(startDay, endDay);
         }
-        //Option c
+        //Option c : Choose a range to a date
         if (option.equals("c")) {
             System.out.print("""
-                    CHOOSE THE  OPTION WEEKS OR DAYS
-                    \ta---WEEKS
-                    \tb---DAYS
+                    choose the type of range:
+                    \tOption a: Weeks
+                    \tOption b: Days
                     >>>""");
             String choice = sc.nextLine();
             while (!choice.equals("a")&&!choice.equals("b")) {
-                System.out.println("PLEASE ENTER THE VALID OPTION");
+                System.out.print("Please enter the valid option >>>>>");
                 choice = sc.nextLine();
             }
-            System.out.println("\nENTER THE END DAY:\n");
+            System.out.print("Enter the end day (format: MM/DD/YYYY) : ");
             String end = sc.nextLine();
             LocalDate endDay = convertStringToLocaleDate(end);
-            System.out.println("\nPLEASE ENTER THE RANGE:");
+            System.out.print("Please enter the range :");
             int range = Integer.parseInt(sc.nextLine());
             String start = minusDaysOrWeeks(choice, endDay, range);
             LocalDate startDay = convertStringToLocaleDate(start);
@@ -111,8 +111,8 @@ public class TimeRange {
     private LocalDate convertStringToLocaleDate(String date){
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
         while (!date.matches(regex)) {
-            System.out.println("PLEASE ENTER DATE AGAIN");
-            date = sc.nextLine();
+            System.out.print("Please follow the format (format: MM/DD/YYYY) >>>");
+            date = sc.next();
         }
         LocalDate localDate = LocalDate.parse(date, formatter);
         return localDate;
