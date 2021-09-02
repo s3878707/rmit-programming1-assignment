@@ -175,7 +175,7 @@ public class Display {
             }
             System.out.println();
             System.out.println("-".repeat(33));
-            System.out.println("\tRange"+"\t|\t"+"\tValue");
+            System.out.println("\t\t\tRange\t"+"\t|\s"+"Value");
             for (int i = 0; i < rangeList.size(); i++) {
                 System.out.print("|\t");
                 System.out.print(rangeList.get(i)+"\t|\t"+results.getResults().get(i));
@@ -209,7 +209,11 @@ public class Display {
             System.out.println();
         }
     }
-    public void chartDisplay(long[] data){
+    public void chartDisplay(Results results){
+        long[] data = new long[results.getResults().size()];
+        for (int i = 0 ; i < results.getResults().size();i++){
+            data[i] = results.getResults().get(i);
+        }
         long[] organizeData = bubbleSort(data, "value", "descending");
         long[] organizeIndex = {3,2,4,5,1,6};
         long powerCounter = 1;

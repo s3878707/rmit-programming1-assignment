@@ -70,13 +70,13 @@ public class main {
             switch (dataOption) {
                 case "a":
 
-                    arrOfTime = new TimeRange(dataOption);
+                    arrOfTime = new TimeRange(geo,dataOption);
                     break;
                 case "b":
-                    arrOfTime = new TimeRange(dataOption);
+                    arrOfTime = new TimeRange(geo,dataOption);
                     break;
                 case "c":
-                    arrOfTime = new TimeRange(dataOption);
+                    arrOfTime = new TimeRange(geo,dataOption);
                     break;
                 default:
                     System.out.println("PLEASE CHOOSE AGAIN");

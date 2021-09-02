@@ -51,10 +51,10 @@ public class userInterface {
             for (String country : countryList) {
                 if (csvData.checkIfDataContainsNextData(country, continent)) {
                     if (n % 3 != 0) {
-                        System.out.printf("%d - %s", n, String.format("%-40s", country));
+                        System.out.printf("%3d - %-40s", n, country);
                         n++;
                     } else {
-                        System.out.printf("%d - %s\n", n, String.format("%-40s", country));
+                        System.out.printf("%3d - %-40s\n", n, country);
                         n++;
                     }
                 }
@@ -76,7 +76,7 @@ public class userInterface {
                 System.out.println("-".repeat(64));
                 System.out.print("Choose the option here >>>>>>");
                 dataOption = sc.next();
-                arrOfTime = new TimeRange(dataOption);
+                arrOfTime = new TimeRange(geo, dataOption);
             } while (!dataOption.equals("a") && !dataOption.equals("b") && !dataOption.equals("c"));
             System.out.print("Days:");
             //Print out date
@@ -140,6 +140,11 @@ public class userInterface {
                     resultType = ("up_to");
                 }
             } while (!reOp.equals("a") && !reOp.equals("b"));
+            //Print out the results
+            System.out.print("Your results : ");
+            for (int i : results.getResults()){
+                System.out.print("\t"+i);
+            }
 
             /*----------------------Let the user choose the results want to display--------------------*/
             String disOp;
@@ -153,15 +158,10 @@ public class userInterface {
                 disOp = sc.next();
                 if (disOp.equals("a")){
                     display.tabularDisplay(results,metric,resultType);
-                }else {
-//                    display.chartDisplay(results);
+                }else if (reOp.equals("b")){
+                    display.chartDisplay(results);
                 }
             } while (!disOp.equals("a") && !disOp.equals("b"));
-            //Print out the results
-            System.out.print("Your results : ");
-            for (int i : results.getResults()){
-                System.out.print("\t"+i);
-            }
 
             //Ask user want to exit again
             System.out.print("\nCONTINUE (Y/N) ? >>>");
