@@ -26,8 +26,8 @@ public class userInterface {
         Scanner sc = new Scanner(System.in);
         menuOption = sc.next();
         while (menuOption.equals("y") || menuOption.equals("Y")) {
-            System.out.println("-".repeat(31)+"WELCOME TO COVID TRACKER"+"-".repeat(31));
             System.out.println("RUNNING .....");
+            System.out.println("-".repeat(31)+"WELCOME TO COVID TRACKER"+"-".repeat(31));
             /*----------------------Let the user choose the continents-----------------*/
             System.out.println("Choose a continent:");
             ArrayList<String> continentList = geo.makeContinentList();

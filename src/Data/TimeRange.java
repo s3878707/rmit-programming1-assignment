@@ -44,7 +44,12 @@ public class TimeRange {
             String start = sc.nextLine();
             LocalDate startDay = convertStringToLocaleDate(start);
             System.out.print("Please enter the range :");
-            int range = Integer.parseInt(sc.next());
+            String rangeInString = sc.next();
+            while (!rangeInString.matches("\\d")){
+                System.out.print("Please enter a number >>>");
+                rangeInString = sc.next();
+            }
+            int range = Integer.parseInt(rangeInString);
             String end = plusDaysOrWeeks(choice, startDay, range);
             LocalDate endDay = convertStringToLocaleDate(end);
             listOfDate = executeDate(startDay, endDay);
@@ -65,7 +70,12 @@ public class TimeRange {
             String end = sc.nextLine();
             LocalDate endDay = convertStringToLocaleDate(end);
             System.out.print("Please enter the range :");
-            int range = Integer.parseInt(sc.nextLine());
+            String rangeInString = sc.next();
+            while (!rangeInString.matches("\\d")){
+                System.out.print("Please enter a number >>>");
+                rangeInString = sc.next();
+            }
+            int range = Integer.parseInt(rangeInString);
             String start = minusDaysOrWeeks(choice, endDay, range);
             LocalDate startDay = convertStringToLocaleDate(start);
             listOfDate = executeDate(startDay, endDay);
