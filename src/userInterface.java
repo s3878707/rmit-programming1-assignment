@@ -7,7 +7,7 @@ import Summary.Group;
 import Summary.Metric;
 import Summary.Results;
 import java.io.FileNotFoundException;
-
+import Display.*;
 import java.util.*;
 public class userInterface {
     public static void main(String[] args) throws FileNotFoundException {
@@ -22,6 +22,7 @@ public class userInterface {
         Group gr;
         Metric metric;
         String menuOption;
+        Display display = new Display();
         System.out.print("DO YOU WANT TO CONTINUE (Y/N) ? >>>");
         Scanner sc = new Scanner(System.in);
         menuOption = sc.next();
@@ -123,6 +124,7 @@ public class userInterface {
 
             /*----------------------Let the user choose the results want to display--------------------*/
             String reOp;
+            String resultType = null;
             do {
                 System.out.println("\n"+" ".repeat(9)+"RESULT"+" ".repeat(9));
                 System.out.println("-".repeat(3)+"Choose your option"+"-".repeat(3));
@@ -132,7 +134,29 @@ public class userInterface {
                 System.out.print("Choose the option here >>>>>>");
                 reOp = sc.next();
                 results = new Results(metric, reOp);
+                if (reOp.equals("a")){
+                    resultType = "new_total";
+                }else if (reOp.equals("b")){
+                    resultType = ("up_to");
+                }
             } while (!reOp.equals("a") && !reOp.equals("b"));
+
+            /*----------------------Let the user choose the results want to display--------------------*/
+            String disOp;
+            do {
+                System.out.println("\n"+" ".repeat(8)+"DISPLAY"+" ".repeat(8));
+                System.out.println("-".repeat(2)+"Choose your option"+"-".repeat(2));
+                System.out.println("| Option [a]: Tabular |");
+                System.out.println("| Option [b]: Chart   |");
+                System.out.println("-".repeat(25));
+                System.out.print("Choose the option here >>>>>>");
+                disOp = sc.next();
+                if (disOp.equals("a")){
+                    display.tableDisplay(results,metric,resultType);
+                }else {
+//                    display.chartDisplay(results);
+                }
+            } while (!disOp.equals("a") && !disOp.equals("b"));
             //Print out the results
             System.out.print("Your results : ");
             for (int i : results.getResults()){

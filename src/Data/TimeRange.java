@@ -45,7 +45,7 @@ public class TimeRange {
             LocalDate startDay = convertStringToLocaleDate(start);
             System.out.print("Please enter the range :");
             String rangeInString = sc.next();
-            while (!rangeInString.matches("\\d")){
+            while (!rangeInString.matches("\\d+")){
                 System.out.print("Please enter a number >>>");
                 rangeInString = sc.next();
             }
@@ -71,7 +71,7 @@ public class TimeRange {
             LocalDate endDay = convertStringToLocaleDate(end);
             System.out.print("Please enter the range :");
             String rangeInString = sc.next();
-            while (!rangeInString.matches("\\d")){
+            while (!rangeInString.matches("\\d+")){
                 System.out.print("Please enter a number >>>");
                 rangeInString = sc.next();
             }
