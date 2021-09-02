@@ -161,8 +161,8 @@ import Summary.Results;
 import java.util.*;
 
 public class Display {
-
-    public void tableDisplay(Results results, Metric metric, String resultType){
+    
+    public void tabularDisplay(Results results, Metric metric, String resultType){
         ArrayList<String> rangeList = new ArrayList<>();
         if (resultType.equals("up_to")){
             for (ArrayList<String> i : metric.getDateListForUpTo()) {
@@ -210,32 +210,32 @@ public class Display {
         }
     }
     public void chartDisplay(long[] data){
-        long[] sortedData = bubbleSort(data, "value", "descending");
-        long[] sortedIndex = {3,2,4,5,1,6};
+        long[] organizeData = bubbleSort(data, "value", "descending");
+        long[] organizeIndex = {3,2,4,5,1,6};
         long powerCounter = 1;
-        long groupNumber = sortedData.length;
+        long groupNumber = organizeData.length;
         while (true){
-            if (Math.pow(10,powerCounter)>=sortedData[0]){
+            if (Math.pow(10,powerCounter)>=organizeData[0]){
                 break;
             }else {
                 powerCounter++;
             }
         }
         long groupIndex = 0;
-        long labelSpaceCount = 0;
+        long spaceCounter = 0;
         long labelLength = 6;
-        long totalLabelSpace = labelSpaceCount*groupNumber+labelLength*groupNumber;
-        while (totalLabelSpace<=80){
-            labelSpaceCount++;
-            totalLabelSpace = labelSpaceCount*groupNumber+labelLength*groupNumber;
+        long totalSpace = spaceCounter*groupNumber+labelLength*groupNumber;
+        while (totalSpace<=80){
+            spaceCounter++;
+            totalSpace = spaceCounter*groupNumber+labelLength*groupNumber;
         }
-        labelSpaceCount--;
+        spaceCounter--;
         for (int i = 0; i < 23; i++) {
             System.out.print("|");
             long tab_count=0;
             ArrayList<Long> indexInARow = new ArrayList<Long>();
-            for (int j = 0; j < sortedData.length; j++) {
-                int rowScale = (int) Math.ceil((23 * sortedData[j]) / (sortedData[0]+Math.pow(10, powerCounter-1)));
+            for (int j = 0; j < organizeData.length; j++) {
+                int rowScale = (int) Math.ceil((23 * organizeData[j]) / (organizeData[0]+Math.pow(10, powerCounter-1)));
                 if (rowScale==(23-i)){
                     indexInARow.add(bubbleSort(data, "index", "descending")[j]);
                 }
@@ -245,12 +245,12 @@ public class Display {
                 indexSort[k] = indexInARow.get(k);
             }
             indexSort = bubbleSort(indexSort, "value", "ascending");
-            for (int k = 0; k < (labelSpaceCount+labelLength/2-1); k++) {
+            for (int k = 0; k < (spaceCounter+labelLength/2-1); k++) {
                 System.out.print(" ");
             }
             int starInARow = 0;
             for (int p = 0; p < indexSort.length; p++) {
-                while (tab_count<(indexSort[p]-1)*(labelSpaceCount+labelLength)-starInARow){
+                while (tab_count<(indexSort[p]-1)*(spaceCounter+labelLength)-starInARow){
                     System.out.print(" ");
                     tab_count++;
                 }
@@ -265,7 +265,7 @@ public class Display {
         }
         System.out.println();
         for (int i = 1; i <= groupNumber; i+=1) {
-            for (int j = 0; j < labelSpaceCount; j++) {
+            for (int j = 0; j < spaceCounter; j++) {
                 System.out.print(" ");
             }
             System.out.print("group"+i);
