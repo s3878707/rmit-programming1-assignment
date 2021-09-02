@@ -99,7 +99,7 @@ public class main {
         }
         resultOptionString = "new_total";
         Display display = new Display();
-        display.tableDisplay(result,metric,resultOptionString);
+        display.tabularDisplay(result,metric,resultOptionString);
 
         ;
         System.out.println();
