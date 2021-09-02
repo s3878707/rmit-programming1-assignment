@@ -152,7 +152,7 @@ public class userInterface {
                 System.out.print("Choose the option here >>>>>>");
                 disOp = sc.next();
                 if (disOp.equals("a")){
-                    display.tableDisplay(results,metric,resultType);
+                    display.tabularDisplay(results,metric,resultType);
                 }else {
 //                    display.chartDisplay(results);
                 }
