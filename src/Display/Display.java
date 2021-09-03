@@ -165,7 +165,7 @@ public class Display {
     //create method tabular display//
     //Display the table with the existing metrics and results//
     public void tabularDisplay(Results results, Metric metric, String resultType){
-        //setting the solution for up_to option//
+        //---------------------setting the solution for up_to option------------------------//
         ArrayList<String> rangeList = new ArrayList<>();
         if (resultType.equals("up_to")){
             for (ArrayList<String> i : metric.getDateListForUpTo()) {
@@ -188,7 +188,7 @@ public class Display {
             System.out.println("-".repeat(33));
             System.out.println();
 
-            //setting the solution for new_total option//
+            //---------------setting the solution for new_total option------------------//
         }else if (resultType.equals("new_total")){
             for (ArrayList<String> i : metric.getDateList()) {
                 if (i.size() > 1) {
@@ -214,7 +214,7 @@ public class Display {
         }
     }
     public void chartDisplay(Results results){
-        //display the chart with the chosen materials//
+        //--display the chart with the chosen materials--//
         long[] data = new long[results.getResults().size()];
         for (int i = 0 ; i < results.getResults().size();i++){
             data[i] = results.getResults().get(i);
@@ -244,7 +244,7 @@ public class Display {
         for (int i = 0; i < 23; i++) {
             System.out.print("|");
             long tab_count=0;
-            //using the loop to run through the chart//
+            //--using the loop to run through the chart--//
             ArrayList<Long> rowInd = new ArrayList<Long>();
             for (int j = 0; j < organizeData.length; j++) {
                 int rowScale = (int) Math.ceil((23 * organizeData[j]) / (organizeData[0]+Math.pow(10, counter-1)));
@@ -327,8 +327,8 @@ public class Display {
         }else if (returnVal.equals("index")){
             return arrInd;
         }else{
-            long[] invalidResult = {0,0,0,0,0,0};
-            return invalidResult;
+            long[] unavaiRe = {0,0,0,0,0,0};
+            return unavaiRe;
         }
     }
 }
