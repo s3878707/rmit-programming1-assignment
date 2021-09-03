@@ -1,160 +1,4 @@
-//package Display;
-//import java.util.*;
-//import Summary.Group;
-//import Summary.Metric;
-//import Summary.Results;
-//import Data.*;
-//import java.util.ArrayList;
-//public class Display {
-//    public static void tabular(Group group, Metric metric, Results results) {
-//
-//        ArrayList<Integer> displayValue = query(results);
-//
-//        ArrayList<String> range = groupRange(metric);
-//
-//        interface tableInterface {
-//            String cellWidthFirstCol(int width, String value);
-//
-//            String cellWidth(int width, String value);
-//
-//            String horizontalBorder(int width);
-//
-//            String horizontalBorderFirstCol(int width);
-//        }
-//        tableInterface table = new tableInterface() {
-//            public String cellWidth(int width, String value) {
-//                String cell = " ";
-//                int padding = (width - value.length());
-//                cell = " " + value + cell.repeat(padding - 1) + "|";
-//                return cell;
-//            }
-//
-//            public String cellWidthFirstCol(int width, String value) {
-//                String cell = cellWidth(width, value);
-//                cell = "|" + cell;
-//                return cell;
-//            }
-//
-//            public String horizontalBorder(int width) {
-//                String border = "-";
-//                border = border.repeat(width);
-//                border += "+";
-//                return border;
-//            }
-//
-//            public String horizontalBorderFirstCol(int width) {
-//                String border = horizontalBorder(width);
-//                border = "+" + border;
-//                return border;
-//            }
-//        };
-//
-//        int rangeColWidth = 35;
-//        int valueColWidth = 15;
-//
-//        System.out.println(
-//                table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
-//        System.out.println(
-//                table.cellWidthFirstCol(rangeColWidth, "Range") + table.cellWidth(valueColWidth, "Value"));
-//        System.out.println(
-//                table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
-//
-//        for (int i = 0; i < range.size(); i++) {
-//            System.out.println(
-//                    table.cellWidthFirstCol(rangeColWidth, range.get(i)) + table.cellWidth(valueColWidth,
-//                            displayValue.get(i).toString()));
-//        }
-//        System.out.println(
-//                table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
-//
-//
-//    }
-//
-//    public static void chart(Group group, Metric metric, Results results) {
-//        int vertical = 24;
-//        int horizontal = 80;
-//        int spacing;
-//        Character[][] displayChart = new Character[vertical][horizontal];
-//        ArrayList<Integer> displayValue = query(results);
-//        ArrayList<Integer> chartPositionValue = new ArrayList<>();
-//
-//        if (group.getGrouping().size() > 79) {
-//            System.out.println("Cannot perform chart with more than 79 groups.");
-//            return;
-//        }
-//
-//        int max = 0;
-//        int zeroCount = 0;
-//        for (Integer i : displayValue) {
-//            if (max < i) {
-//                max = i;
-//            }
-//            if (i == 0) {
-//                zeroCount += 1;
-//            }
-//        }
-//
-//        for (Integer value : displayValue) {
-//            int position = vertical - 2;
-//            if (zeroCount != displayValue.size()) {
-//                position = Math.round((vertical - 2) - (((float) value / max)) * (vertical - 2));
-//            }
-//            chartPositionValue.add(position);
-//        }
-//
-//        spacing = (int) Math.floor((float) (horizontal - 1) / displayValue.size());
-//        for (int i = 0; i < vertical; i++) {
-//            for (int j = 0; j < horizontal; j++) {
-//                displayChart[i][j] = ' ';
-//            }
-//        }
-//
-//        int index = 0;
-//        for (int i = 1; i <= chartPositionValue.size() * spacing; i += spacing) {
-//            displayChart[chartPositionValue.get(index)][i] = '*';
-//            index += 1;
-//        }
-//
-//        for (int i = 0; i < vertical; i++) {
-//            for (int j = 0; j < horizontal; j++) {
-//                if (i == vertical - 1) {
-//                    displayChart[i][j] = '_';
-//                }
-//                if (j == 0) {
-//                    displayChart[i][j] = '|';
-//                }
-//            }
-//        }
-//        for (int i = 0; i < vertical; i++) {
-//            for (int j = 0; j < horizontal; j++) {
-//                if (j != horizontal - 1) {
-//                    System.out.print(displayChart[i][j]);
-//                } else {
-//                    System.out.print(displayChart[i][j]);
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    public static ArrayList<Integer> query( Results results) {
-//        ArrayList<Integer> displayValue = results.getResults();
-//        return displayValue;
-//    }
-//    public static ArrayList<String> groupRange(Metric metric) {
-//        ArrayList<String> listOfRange = new ArrayList<>();
-//        for (ArrayList<String> group : metric.getDateList()) {
-//            String startDay = group.get(0);
-//            String endDay = group.get(group.size() - 1);
-//            if (group.size() > 1) {
-//                listOfRange.add(startDay + "-" + endDay);
-//            } else {
-//                listOfRange.add(startDay);
-//            }
-//        }
-//        return listOfRange;
-//    }
-//}
+
 package Display;
 import Summary.Metric;
 import Summary.Results;
@@ -221,7 +65,6 @@ public class Display {
             data[i] = results.getResults().get(i);
         }
         long[] organizeData = bubbleSort(data, "value", "descending");
-        long[] organizeIndex = {3,2,4,5,1,6};
         long counter = 1;
         long grpNum = organizeData.length;
         while (true){
@@ -232,7 +75,7 @@ public class Display {
                 counter++;
             }
         }
-        long groupIndex = 0;
+
         long spaceCounter = 0;
         long labelLength = 6;
         long totalSpace = spaceCounter*grpNum+labelLength*grpNum;
@@ -246,7 +89,7 @@ public class Display {
             System.out.print("|");
             long tab_count=0;
             //--using the loop to run through the chart--//
-            ArrayList<Long> rowInd = new ArrayList<Long>();
+            ArrayList<Long> rowInd = new ArrayList<>();
             for (int j = 0; j < organizeData.length; j++) {
                 int rowScale = (int) Math.ceil((23 * organizeData[j]) / (organizeData[0]+Math.pow(10, counter-1)));
                 if (rowScale==(23-i)){
