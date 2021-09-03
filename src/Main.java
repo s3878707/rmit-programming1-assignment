@@ -8,6 +8,7 @@ import Summary.Metric;
 import Summary.Results;
 import java.io.FileNotFoundException;
 import Display.*;
+
 import java.util.*;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
@@ -15,21 +16,18 @@ public class Main {
         System.out.println("|"+" ".repeat(35)+"COVID TRACKER"+" ".repeat(36)+"|");
         System.out.println("-".repeat(86));
         CSVdata csvData = new CSVdata();
-        Database database;
-        Results results;
-        Geo geo = new Geo();
-        TimeRange arrOfTime;
-        Group gr;
-        Metric metric;
-        String menuOption;
-        Display display = new Display();
         System.out.print("DO YOU WANT TO CONTINUE (Y/N) ? >>>");
         Scanner sc = new Scanner(System.in);
-        menuOption = sc.next();
+        String menuOption = sc.next();
+
+        //Run the system if user choose yes
         while (menuOption.equals("y") || menuOption.equals("Y")) {
             System.out.println("RUNNING .....");
             System.out.println("-".repeat(31)+"WELCOME TO COVID TRACKER"+"-".repeat(31));
+
+
             /*----------------------Let the user choose the continents-----------------*/
+            Geo geo = new Geo();
             System.out.println("Choose a continent:");
             ArrayList<String> continentList = geo.makeContinentList();
             int n = 1;
@@ -41,6 +39,7 @@ public class Main {
             String continent = sc.next().trim();
             //ask the user to enter the country name again
             continent = geo.printErrorWhenUserEnterWrong(continent, "continent");
+
 
             /*--------------Let the user choose the country--------------------------*/
             System.out.println("-".repeat(107));
@@ -65,7 +64,9 @@ public class Main {
             country = geo.printErrorWhenUserEnterWrong(country, "location");
             geo = new Geo(continent, country);
 
+
             /*---------------------Let the user enter the date range------------------*/
+            TimeRange arrOfTime;
             String dataOption;
             System.out.println(" ".repeat(27)+"DATE RANGE"+" ".repeat(27));
             System.out.println("-".repeat(13)+"Please choose option you want to apply"+"-".repeat(13));
@@ -83,9 +84,11 @@ public class Main {
             for (String i : arrOfTime.getListOfDate()){
                 System.out.print("\t"+i);
             }
-            database = new Database(geo, arrOfTime);
+            Database database = new Database(geo, arrOfTime);
+
 
             /*---------------------Ask the user to choose the grouping type--------------------*/
+            Group gr;
             String groupingOp;
             System.out.println("\n"+" ".repeat(12)+"GROUPING"+" ".repeat(12));
             System.out.println("-".repeat(7)+"Choose your option"+"-".repeat(7));
@@ -103,7 +106,10 @@ public class Main {
             for (ArrayList<Data> i : gr.getGrouping()){
                 System.out.print("\t"+i+"\n");
             }
+
+
             /*-----------------------Let the user choose the metric---------------------*/
+            Metric metric;
             String metOp;
             System.out.println("\n"+" ".repeat(12)+"METRIC"+" ".repeat(12));
             System.out.println("-".repeat(6)+"Choose your option"+"-".repeat(6));
@@ -123,6 +129,7 @@ public class Main {
             }
 
             /*----------------------Let the user choose the results want to display--------------------*/
+            Results results;
             String reOp;
             String resultType = null;
             System.out.println("\n"+" ".repeat(9)+"RESULT"+" ".repeat(9));
@@ -147,6 +154,7 @@ public class Main {
             }
 
             /*----------------------Let the user choose the results want to display--------------------*/
+            Display display = new Display();
             String disOp;
             System.out.println("\n"+" ".repeat(8)+"DISPLAY"+" ".repeat(8));
             System.out.println("-".repeat(2)+"Choose your option"+"-".repeat(2));
