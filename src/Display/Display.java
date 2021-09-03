@@ -179,6 +179,7 @@ public class Display {
             System.out.println();
             System.out.println("-".repeat(33));
             System.out.println("\t\t\tRange\t"+"\t|\s"+"Value");
+            System.out.println("-".repeat(33));
             for (int i = 0; i < rangeList.size(); i++) {
                 System.out.print("|\t");
                 System.out.print(rangeList.get(i)+"\t|\t"+results.getResults().get(i));
