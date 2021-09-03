@@ -1,7 +1,5 @@
 package Summary;
 
-import Data.*;
-
 import java.util.ArrayList;
 
 public class Results {
@@ -9,11 +7,11 @@ public class Results {
     public  Results(){}
 
     /**
-     * Option a : New Total
-     * Option b : Up To
-     * Get the specific list from the metric depends on option that user chooses
-     * @param metric
-     * @param option
+
+     * @param metric An array list of groups containing int
+     * @param option  Option a : New Total
+     *       Option b : Up To
+     *       Get the specific list from the metric depends on option that user chooses
      */
     public Results(Metric metric, String option) {
         if (option.equals("a")) {

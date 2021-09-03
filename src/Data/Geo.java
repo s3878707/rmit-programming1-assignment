@@ -20,8 +20,8 @@ public class Geo {
 
     /**
      * To have a list of country or location where a country appears only once, the same with location
-     * @param dataType
-     * @return
+     * @param dataType the key that you want to make a list of its value. For example: continent, location,...
+     * @return  a set of value
      * @throws FileNotFoundException
      */
     private HashSet<String> listOfRegion(String dataType) throws FileNotFoundException {
@@ -75,8 +75,8 @@ public class Geo {
 }
 class SortPlaceByAlphabet implements Comparator<String>{
     public int compare(String p1, String p2){
-        int d1 = (int)(p1.charAt(0));
-        int d2 = (int)(p2.charAt(0));
+        int d1 = (p1.charAt(0));
+        int d2 = (p2.charAt(0));
         return d1-d2;
     }
 }

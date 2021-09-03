@@ -29,6 +29,7 @@ public class ProcessedData{
         for (int i =1; i< csvData.size(); i++){
             HashMap<String,String> previousMap = csvData.get(i-1);
             HashMap<String,String> currentMap = csvData.get(i);
+            // if both data have the same country, the value people vaccinated will be changed to new vaccinated
             if (previousMap.get("location").equals(currentMap.get("location"))) {
                 processedData.add(new Data(
                         currentMap.get("continent"),
@@ -56,7 +57,6 @@ public class ProcessedData{
     private Integer calculateNewVaccinated(HashMap<String,String> previousMap, HashMap<String,String> currentMap) {
         String currentMapPpVaccinated;
         String previousMapPpVaccinated;
-
         if (previousMap.get("people_vaccinated")==null||previousMap.get("people_vaccinated").equals("")) {
             previousMapPpVaccinated ="0";
         }else{

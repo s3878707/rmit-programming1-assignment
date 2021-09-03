@@ -23,9 +23,9 @@ public class CSVdata {
     /**
      * this method use to check if a country is in a continent, which will use to filter
      * the contry after user choose a continent in userInterface
-     * @param data1
-     * @param data2
-     * @return
+     * @param data1 the data user has choosen. For example : Asia, Afghanistan,...
+     * @param data2 the data user want to check if both data is in the same data
+     * @return check if a country is in Asia. If Afghanistan will return true, France will be false
      */
     public  boolean checkIfDataContainsNextData(String data1, String data2)  {
         for (HashMap<String, String> i : this.csvData) {

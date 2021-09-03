@@ -1,7 +1,4 @@
 package Data;
-
-import CSVData.*;
-
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -11,7 +8,7 @@ public class Database {
      * continent,location and timeRange
      */
     private ArrayList<Data> selectedData = new ArrayList<>();
-    public Database(){};
+    public Database(){}
     public Database(Geo geo, TimeRange timeRange) throws FileNotFoundException{
         ProcessedData processedData = new ProcessedData();
         for (String localDate : timeRange.getListOfDate()) {
@@ -32,23 +29,7 @@ public class Database {
             }
         }
     }
-
-
-    public String toString() {
-        return String.format(selectedData.toString());
-    }
-
-
     public ArrayList<Data> getSelectedData() {
         return selectedData;
-    }
-
-
-    public static void main(String[] args) throws FileNotFoundException {
-        CSVdata aa = new CSVdata();
-        ProcessedData processedData = new ProcessedData();
-        for (Data i : processedData.getProcessedData()){
-            System.out.println(i);
-        }
     }
 }

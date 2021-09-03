@@ -10,11 +10,11 @@ public class Group {
     public Group (){}
 
     /**
-     * Option a : No grouping
-     * Option b : number of groups (divide data into that number of groups)
-     * Option c :  number of days (divide data into groups so that each group contains number of days)
-     * @param data
-     * @param option
+
+     * @param data a list of data that user has selected after entering location and time
+     * @param option Option a : No grouping
+     *       Option b : number of groups (divide data into that number of groups)
+     *      Option c :  number of days (divide data into groups so that each group contains number of days)
      */
     public Group(Database data, String option) {
         ArrayList<Data> listData = data.getSelectedData();

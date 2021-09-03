@@ -13,11 +13,11 @@ public class Metric {
     public Metric (){}
 
     /**
-     * Option a : new cases
-     * Option b : new deaths
-     * Option c : new vaccinated
-     * @param group
-     * @param option
+
+     * @param group an array list of groups containing data
+     * @param option  Option a : new cases
+     *       Option b : new deaths
+     *       Option c : new vaccinated
      * @throws FileNotFoundException
      */
     public Metric(Group group, String option) throws FileNotFoundException {

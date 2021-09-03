@@ -17,11 +17,9 @@ public class TimeRange {
     }
 
     /**
-     * Option a : Enter start day and end day
-     * Option b :  Number of days or weeks after start date
-     * Option c : Number of days or weeks before end date
-     *
-     * @param option
+     * @param option Option a : Enter start day and end day
+     *       Option b :  Number of days or weeks after start date
+     *      Option c : Number of days or weeks before end date
      */
     public TimeRange(Geo geo, String option) throws FileNotFoundException {
 
@@ -117,9 +115,9 @@ public class TimeRange {
 
     /**
      * Make  a string list of day when all conditions are met
-     * @param start
-     * @param end
-     * @return
+     * @param start start day
+     * @param end end day
+     * @return return a list of days between start days and end days
      */
     private ArrayList<String> executeDate(String start, String end) {
         ArrayList<String> listOfDate = new ArrayList<>();
@@ -142,8 +140,10 @@ public class TimeRange {
     /**
      * because date is formatted MM/dd/yyyy
      * make it looks like the day in the csv file which is benefits for storing data
-     * @param date
-     * @return
+     * @param date the user input
+     * @return a string of date look like in CSV file. For example: if day is 02/25/2020, return 2/25/2020
+     *                                                                        10/02/2020, return 10/2/2020
+     *                                                                        02/03/2020, return 2/3/2020
      */
     private String makeDateSimilarToDateInCSV(String date){
         // remove the 0 before days
@@ -159,9 +159,9 @@ public class TimeRange {
 
     /**
      * check if the date in a specific location that user choose is available in csv file
-     * @param geo
-     * @param date
-     * @return
+     * @param geo user input in geo part
+     * @param date user in put
+     * @return if Afghanistan has metrics in 02/24/2020, it will return true or otherwise
      * @throws FileNotFoundException
      */
     private boolean checkIfDateIsAvailableInCsv(Geo geo, String date) throws FileNotFoundException{
@@ -174,8 +174,8 @@ public class TimeRange {
 
     /**
      * Check if date user enter is followed the format
-     * @param date
-     * @return
+     * @param date user input
+     * @return if the date user input is followed the format, it will return true or otherwise
      */
     private String checkIfDateIsFollowedTheFormat(String date) {
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
@@ -188,8 +188,8 @@ public class TimeRange {
 
     /**
      * check if user enter a number of range
-     * @param range
-     * @return
+     * @param range user input
+     * @return if user input only number instead of letter, it will return true
      */
     private int checkValidRange( String range) {
         while (!range.matches("\\d+")){
@@ -202,10 +202,11 @@ public class TimeRange {
 
     /**
      *
-     * @param choice
-     * @param date
-     * @param range
-     * @return
+     * @param choice user input when choose type of range: a is Days
+     *                                                     b is Weeks
+     * @param date user input
+     * @param range user input
+     * @return a date after being minus with a range of days or weeks
      */
     private String minusDaysOrWeeks(String choice, String date, int range) {
         String stringDayAfterProcess = null;
