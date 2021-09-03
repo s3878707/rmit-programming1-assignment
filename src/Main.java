@@ -9,7 +9,7 @@ import Summary.Results;
 import java.io.FileNotFoundException;
 import Display.*;
 import java.util.*;
-public class userInterface {
+public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         System.out.println("-".repeat(86));
         System.out.println("|"+" ".repeat(35)+"COVID TRACKER"+" ".repeat(36)+"|");
@@ -67,13 +67,13 @@ public class userInterface {
 
             /*---------------------Let the user enter the date range------------------*/
             String dataOption;
-            do {
-                System.out.println(" ".repeat(27)+"DATE RANGE"+" ".repeat(27));
-                System.out.println("-".repeat(13)+"Please choose option you want to apply"+"-".repeat(13));
-                System.out.println("| Option [a]: Enter the start date and end date (inclusive)    |");
-                System.out.println("| Option [b]: A number of days or weeks from a particular date |");
-                System.out.println("| Option [c]: A number of days or weeks to a particular date   |");
-                System.out.println("-".repeat(64));
+            System.out.println(" ".repeat(27)+"DATE RANGE"+" ".repeat(27));
+            System.out.println("-".repeat(13)+"Please choose option you want to apply"+"-".repeat(13));
+            System.out.println("| Option [a]: Enter the start date and end date (inclusive)    |");
+            System.out.println("| Option [b]: A number of days or weeks from a particular date |");
+            System.out.println("| Option [c]: A number of days or weeks to a particular date   |");
+            System.out.println("-".repeat(64));
+            do{
                 System.out.print("Choose the option here >>>>>>");
                 dataOption = sc.next();
                 arrOfTime = new TimeRange(geo, dataOption);
@@ -87,13 +87,13 @@ public class userInterface {
 
             /*---------------------Ask the user to choose the grouping type--------------------*/
             String groupingOp;
+            System.out.println("\n"+" ".repeat(12)+"GROUPING"+" ".repeat(12));
+            System.out.println("-".repeat(7)+"Choose your option"+"-".repeat(7));
+            System.out.println("| Option [a]: No grouping      |");
+            System.out.println("| Option [b]: Number of groups |");
+            System.out.println("| Option [c]: Number of days   |");
+            System.out.println("-".repeat(32));
             do {
-                System.out.println("\n"+" ".repeat(12)+"GROUPING"+" ".repeat(12));
-                System.out.println("-".repeat(7)+"Choose your option"+"-".repeat(7));
-                System.out.println("| Option [a]: No grouping      |");
-                System.out.println("| Option [b]: Number of groups |");
-                System.out.println("| Option [c]: Number of days   |");
-                System.out.println("-".repeat(32));
                 System.out.print("Choose the option here >>>>>>");
                 groupingOp = sc.next();
                 gr = new Group(database, groupingOp);
@@ -105,13 +105,13 @@ public class userInterface {
             }
             /*-----------------------Let the user choose the metric---------------------*/
             String metOp;
+            System.out.println("\n"+" ".repeat(12)+"METRIC"+" ".repeat(12));
+            System.out.println("-".repeat(6)+"Choose your option"+"-".repeat(6));
+            System.out.println("| Option [a]: Positive Cases |");
+            System.out.println("| Option [b]: Deaths         |");
+            System.out.println("| Option [c]: New Vaccinated |");
+            System.out.println("-".repeat(30));
             do {
-                System.out.println("\n"+" ".repeat(12)+"METRIC"+" ".repeat(12));
-                System.out.println("-".repeat(6)+"Choose your option"+"-".repeat(6));
-                System.out.println("| Option [a]: Positive Cases |");
-                System.out.println("| Option [b]: Deaths         |");
-                System.out.println("| Option [c]: New Vaccinated |");
-                System.out.println("-".repeat(30));
                 System.out.print("Choose the option here >>>>>>");
                 metOp = sc.next();
                 metric = new Metric(gr, metOp);
@@ -125,12 +125,12 @@ public class userInterface {
             /*----------------------Let the user choose the results want to display--------------------*/
             String reOp;
             String resultType = null;
+            System.out.println("\n"+" ".repeat(9)+"RESULT"+" ".repeat(9));
+            System.out.println("-".repeat(3)+"Choose your option"+"-".repeat(3));
+            System.out.println("| Option [a]: New total |");
+            System.out.println("| Option [b]: Up to     |");
+            System.out.println("-".repeat(25));
             do {
-                System.out.println("\n"+" ".repeat(9)+"RESULT"+" ".repeat(9));
-                System.out.println("-".repeat(3)+"Choose your option"+"-".repeat(3));
-                System.out.println("| Option [a]: New total |");
-                System.out.println("| Option [b]: Up to     |");
-                System.out.println("-".repeat(25));
                 System.out.print("Choose the option here >>>>>>");
                 reOp = sc.next();
                 results = new Results(metric, reOp);
@@ -148,17 +148,17 @@ public class userInterface {
 
             /*----------------------Let the user choose the results want to display--------------------*/
             String disOp;
+            System.out.println("\n"+" ".repeat(8)+"DISPLAY"+" ".repeat(8));
+            System.out.println("-".repeat(2)+"Choose your option"+"-".repeat(2));
+            System.out.println("| Option [a]: Tabular |");
+            System.out.println("| Option [b]: Chart   |");
+            System.out.println("-".repeat(25));
             do {
-                System.out.println("\n"+" ".repeat(8)+"DISPLAY"+" ".repeat(8));
-                System.out.println("-".repeat(2)+"Choose your option"+"-".repeat(2));
-                System.out.println("| Option [a]: Tabular |");
-                System.out.println("| Option [b]: Chart   |");
-                System.out.println("-".repeat(25));
                 System.out.print("Choose the option here >>>>>>");
                 disOp = sc.next();
                 if (disOp.equals("a")){
                     display.tabularDisplay(results,metric,resultType);
-                }else if (reOp.equals("b")){
+                }else if (disOp.equals("b")){
                     display.chartDisplay(results);
                 }
             } while (!disOp.equals("a") && !disOp.equals("b"));

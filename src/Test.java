@@ -5,7 +5,7 @@ import Summary.*;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-public class main {
+public class Test {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner sc = new Scanner(System.in);
         System.out.println("COVID TRACKER");
@@ -99,7 +99,7 @@ public class main {
         }
         resultOptionString = "new_total";
         Display display = new Display();
-        display.tabularDisplay(result,metric,resultOptionString);
+        display.chartDisplay(result);
 
         ;
         System.out.println();

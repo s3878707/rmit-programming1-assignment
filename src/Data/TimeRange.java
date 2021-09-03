@@ -6,104 +6,125 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
 
 public class TimeRange {
     Scanner sc = new Scanner(System.in);
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private ArrayList<String> listOfDate = new ArrayList<>();
-    public TimeRange(){}
+
+    public TimeRange() {
+    }
 
     /**
      * Option a : Enter start day and end day
      * Option b :  Number of days or weeks after start date
      * Option c : Number of days or weeks before end date
+     *
      * @param option
      */
-    public TimeRange( Geo geo, String option) throws FileNotFoundException{
-        // Option a
+    public TimeRange(Geo geo, String option) throws FileNotFoundException {
+
+        // ENTER A START DAY AND END DAY
         if (option.equals("a")) {
-            System.out.print("Enter the start day (format: MM/DD/YYYY) : ");
+            // Enter start date
+            System.out.print("Enter the start date (format: MM/DD/YYYY) >>> ");
             String start = sc.next();
-            LocalDate startDay = convertStringToLocalDate(geo,start);
-            System.out.print("Enter the end day (format: MM/DD/YYYY) : ");
+            start = checkIfDateIsFollowedTheFormat(start);
+            while (checkIfDateIsAvailableInCsv(geo, start)) {
+                System.out.print("The date has not been updated. Please choose again (format: MM/DD/YYYY) >>>");
+                start = checkIfDateIsFollowedTheFormat(sc.next());
+            }
+            // Enter end date
+            System.out.print("Enter the end date (format: MM/DD/YYYY) >>> ");
             String end = sc.next();
-            LocalDate endDay = convertStringToLocalDate(geo,end);
-            listOfDate = executeDate(startDay, endDay);
+            end = checkIfDateIsFollowedTheFormat(end);
+            while (checkIfDateIsAvailableInCsv(geo, end)) {
+                System.out.print("The date has not been updated. Please choose again (format: MM/DD/YYYY) >>>");
+                end = checkIfDateIsFollowedTheFormat(sc.next());
+            }
+            listOfDate = executeDate(start, end);
         }
-        //Option b : Choose a range from the date
+
+        //A NUMBER OF DAYS OR WEEKS FROM A PARTICULAR DATE
         if (option.equals("b")) {
+            // Chooe option for range
             System.out.print("""
                     choose the type of range:
-                    \tOption a: Weeks
-                    \tOption b: Days
+                    \tOption a: Days
+                    \tOption b: Weeks
                     >>>""");
             String choice = sc.nextLine();
-            while (!choice.equals("a")&&!choice.equals("b")) {
-                System.out.print("Please enter the valid option >>>>>");
+            while (!choice.equals("a") && !choice.equals("b")) {
+                System.out.print("Please enter the valid option >>>");
                 choice = sc.next();
             }
-            System.out.print("Enter the start day (format: MM/DD/YYYY) : ");
+            // Enter start date
+            System.out.print("Enter the start date (format: MM/DD/YYYY) >>> ");
             String start = sc.next();
-            LocalDate startDay = convertStringToLocalDate(geo, start);
-            System.out.print("Please enter the range :");
-            String rangeInString = sc.next();
-            while (!rangeInString.matches("\\d+")){
-                System.out.print("Please enter a number >>>");
-                rangeInString = sc.next();
+            start = checkIfDateIsFollowedTheFormat(start);
+            while (checkIfDateIsAvailableInCsv(geo, start)) {
+                System.out.print("The date has not been updated. Please choose again (format: MM/DD/YYYY) >>>");
+                start = sc.next();
+                start = checkIfDateIsFollowedTheFormat(start);
             }
-            int range = Integer.parseInt(rangeInString);
-            String end = plusDaysOrWeeks(choice, startDay, range);
-            LocalDate endDay = convertStringToLocalDate(geo, end);
-            listOfDate = executeDate(startDay, endDay);
+            // Enter the range
+            System.out.print("Please enter the range >>>");
+            int range = checkValidRange(sc.next());
+            // Check if the date after calculating is available in CSV file
+            while (checkIfDateIsAvailableInCsv(geo, plusDaysOrWeeks(choice,start,range))) {
+                System.out.print("Your latter data has not been updated. Please enter range again >>>");
+                range = checkValidRange(sc.next());
+            }
+            String end = plusDaysOrWeeks(choice, start, range);
+            listOfDate = executeDate(start, end);
         }
-        //Option c : Choose a range to a date
+
+        //A NUMBER OF DAYS OR WEEKS TO A PARTICULAR DATE
         if (option.equals("c")) {
+            // Choose option for range
             System.out.print("""
                     choose the type of range:
-                    \tOption a: Weeks
-                    \tOption b: Days
+                    \tOption a: Days
+                    \tOption b: Weeks
                     >>>""");
             String choice = sc.nextLine();
-            while (!choice.equals("a")&&!choice.equals("b")) {
+            while (!choice.equals("a") && !choice.equals("b")) {
                 System.out.print("Please enter the valid option >>>>>");
                 choice = sc.next();
             }
-            System.out.print("Enter the end day (format: MM/DD/YYYY) : ");
+            // Enter the end date
+            System.out.print("Enter the end date (format: MM/DD/YYYY) >>> ");
             String end = sc.next();
-            LocalDate endDay = convertStringToLocalDate(geo, end);
-            System.out.print("Please enter the range :");
-            String rangeInString = sc.next();
-            int range = Integer.parseInt(rangeInString);
-            while (true){
-                if(!rangeInString.matches("\\d+")) {
-                    System.out.print("Please enter a number >>>");
-                    rangeInString = sc.next();
-                    range = Integer.parseInt(rangeInString);
-                }else if (checkValidDate(geo,minusDaysOrWeeks(choice, endDay, range))) {
-                    System.out.print("Your latter data has not been updated. Please enter range again >>>");
-                    rangeInString = sc.next();
-                    range = Integer.parseInt(rangeInString);
-                }else {
-                    break;
-                }
+            end = checkIfDateIsFollowedTheFormat(end);
+            while (checkIfDateIsAvailableInCsv(geo, end)) {
+                System.out.print("The date has not been updated. Please choose again (format: MM/DD/YYYY) >>>");
+                end = sc.next();
+                end = checkIfDateIsFollowedTheFormat(end);
             }
-//            int range = Integer.parseInt(rangeInString);
-            String start = minusDaysOrWeeks(choice, endDay, range);
-            LocalDate startDay = convertStringToLocalDate(geo, start);
-            listOfDate = executeDate(startDay, endDay);
+            // Enter the range
+            System.out.print("Please enter the range >>>");
+            int range = checkValidRange(sc.next());
+            // Check if the date after calculating is available in CSV file
+            while (checkIfDateIsAvailableInCsv(geo, minusDaysOrWeeks(choice,end,range))) {
+                System.out.print("Your start date has not been updated. Please enter range again >>>");
+                range = checkValidRange(sc.next());
+            }
+            String start = minusDaysOrWeeks(choice, end, range);
+            listOfDate = executeDate(start, end);
         }
     }
 
     /**
      * Make  a string list of day when all conditions are met
-     * @param startDay
-     * @param endDay
+     * @param start
+     * @param end
      * @return
      */
-    private ArrayList<String> executeDate(LocalDate startDay, LocalDate endDay) {
+    private ArrayList<String> executeDate(String start, String end) {
         ArrayList<String> listOfDate = new ArrayList<>();
+        LocalDate startDay = LocalDate.parse(start, formatter);
+        LocalDate endDay = LocalDate.parse(end, formatter);
         // check if start day is before end day
         if (startDay.isAfter(endDay)){
             LocalDate trans = startDay;
@@ -111,16 +132,21 @@ public class TimeRange {
             endDay = trans;
         }
         for (LocalDate d = startDay; !d.isAfter(endDay); d = d.plusDays(1)) {
-            // because LocalDate is formatted MM/dd/yyyy
-            // make it looks like the day in the csv file which is benefits for storing data
-            // remove the 0 before day
             String b = d.format(formatter);
-            makeDateSimilarToDateInCSV(b);
+            b = makeDateSimilarToDateInCSV(b);
             listOfDate.add(b);
         }
         return listOfDate;
     }
+
+    /**
+     * because date is formatted MM/dd/yyyy
+     * make it looks like the day in the csv file which is benefits for storing data
+     * @param date
+     * @return
+     */
     private String makeDateSimilarToDateInCSV(String date){
+        // remove the 0 before days
         if (date.charAt(3)=='0'){
             date = date.substring(0,3) + date.substring(4);
         }
@@ -130,66 +156,86 @@ public class TimeRange {
         }
         return date;
     }
-    private boolean checkValidDate(Geo geo, String date) throws FileNotFoundException{
-        String regex = "^\\d{2}/\\d{2}/\\d{4}$";
-        CSVdata data = new CSVdata();
-        if (!date.matches(regex)){
-            return true;
-        }else if (!data.checkIfDataContainsNextData(geo.getCountry(),makeDateSimilarToDateInCSV(date))){
-            return true;
-        }else {
-            return false;
-        }
-    }
+
     /**
-     * This method will convert String type to LocalDate type in order to calculate which related to time
+     * check if the date in a specific location that user choose is available in csv file
+     * @param geo
+     * @param date
+     * @return
+     * @throws FileNotFoundException
+     */
+    private boolean checkIfDateIsAvailableInCsv(Geo geo, String date) throws FileNotFoundException{
+        CSVdata data = new CSVdata();
+        while (!data.checkIfDataContainsNextData(geo.getCountry(),makeDateSimilarToDateInCSV(date))){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if date user enter is followed the format
      * @param date
      * @return
      */
-    private LocalDate convertStringToLocalDate(Geo geo,String date) throws FileNotFoundException {
+    private String checkIfDateIsFollowedTheFormat(String date) {
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
-        CSVdata data = new CSVdata();
-        while (true) {
-            if (!date.matches(regex)) {
-                System.out.print("Please follow the format (format: MM/DD/YYYY) >>>");
-                date = sc.next();
-            }else if (!data.checkIfDataContainsNextData(geo.getCountry(),makeDateSimilarToDateInCSV(date))){
-                System.out.print("Your day you found has not been updated. Please choose again >>>");
-                date = sc.next();
-            }else {
-                break;
-            }
+        while (!date.matches(regex)){
+            System.out.print("Please follow the format (format: MM/DD/YYYY) >>>");
+            date = sc.next();
         }
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        return localDate;
+        return date;
     }
-    private String minusDaysOrWeeks(String choice, LocalDate day, int range) {
+
+    /**
+     * check if user enter a number of range
+     * @param range
+     * @return
+     */
+    private int checkValidRange( String range) {
+        while (!range.matches("\\d+")){
+            System.out.print("Please enter a number >>>");
+            range = sc.next();
+        }
+        int intRange = Integer.parseInt(range);
+        return intRange;
+    }
+
+    /**
+     *
+     * @param choice
+     * @param date
+     * @param range
+     * @return
+     */
+    private String minusDaysOrWeeks(String choice, String date, int range) {
         String stringDayAfterProcess = null;
+        LocalDate day = LocalDate.parse(date, formatter);
             switch (choice) {
                 case "a":
-                    LocalDate dayAfterProcess = day.minusWeeks(range);
+                    LocalDate dayAfterProcess = day.minusDays(range);
                     stringDayAfterProcess = dayAfterProcess.format(formatter);
                     break;
                 case "b":
-                    dayAfterProcess = day.minusDays(range);
+                    dayAfterProcess = day.minusWeeks(range);
+                    stringDayAfterProcess = dayAfterProcess.format(formatter);
+                break;
+            }
+        return stringDayAfterProcess;
+    }
+    private String plusDaysOrWeeks(String choice, String date, int range) {
+        String stringDayAfterProcess = null;
+        LocalDate day = LocalDate.parse(date, formatter);
+            switch (choice) {
+                case "a":
+                    LocalDate dayAfterProcess = day.plusDays(range);
+                    stringDayAfterProcess = dayAfterProcess.format(formatter);
+                    break;
+                case "b":
+                    dayAfterProcess = day.plusWeeks(range);
                     stringDayAfterProcess = dayAfterProcess.format(formatter);
                     break;
             }
         return stringDayAfterProcess;
-    }
-    private String plusDaysOrWeeks(String choice, LocalDate day, int range) {
-        String afterProcess = null;
-            switch (choice) {
-                case "a":
-                    LocalDate dayAfterProcess = day.plusWeeks(range);
-                    afterProcess = dayAfterProcess.format(formatter);
-                    break;
-                case "b":
-                    dayAfterProcess = day.plusDays(range);
-                    afterProcess = dayAfterProcess.format(formatter);
-                    break;
-            }
-        return afterProcess;
     }
     public ArrayList<String> getListOfDate(){
         return listOfDate;

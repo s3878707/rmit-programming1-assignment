@@ -29,14 +29,14 @@ public class Group {
         // number of groups
         if (option.equals("b")){
             System.out.print("Enter number of group >>>");
-            int numberOfGroup = sc.nextInt();
+            int numberOfGroup = checkValidNumber(sc.next());
             while (numberOfGroup>listData.size()) {
-                System.out.println("The number of groups must smaller than the number of data >>>");
+                System.out.print("The number of groups must smaller than the number of data >>>");
                 numberOfGroup = sc.nextInt();
             }
             int[] groupSize = new int[numberOfGroup];
             int i = 0;
-            // Make a list of integer which stands for the maximum each groups can contains
+            // Make a list of integer which every integer stands for the maximum of that group can contains respectively
             // For example: [3,2,2] means first group has 3 data, second group has 2 data and so on
             while (size!=0){
                 groupSize[i]+=1;
@@ -58,8 +58,8 @@ public class Group {
         }
         if (option.equals("c")){
             System.out.print("Enter the number of days in a group >>>");
-            int numberOfDays = sc.nextInt();
-            while (size % numberOfDays != 0){
+            int numberOfDays = checkValidNumber(sc.next());
+            while (size % numberOfDays != 0||numberOfDays > size){
                 System.out.print("The data must be devided equally in ever group >>>>");
                 numberOfDays = sc.nextInt();
             }
@@ -74,6 +74,14 @@ public class Group {
                 grouping.add(l);
             }
         }
+    }
+    private int checkValidNumber( String range) {
+        while (!range.matches("\\d+")){
+            System.out.print("Please enter a number >>>");
+            range = sc.next();
+        }
+        int intNumber = Integer.parseInt(range);
+        return intNumber;
     }
     public ArrayList<ArrayList<Data>> getGrouping(){
         return grouping;
