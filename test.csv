@@ -1,9 +1,8 @@
 iso_code,continent,location,date,new_cases,new_deaths,people_vaccinated,population
-AFG,Asia,Afghanistan,2/24/2020,1,,,38928341
-AFG,Asia,Afghanistan,2/25/2020,0,,,38928341
-AFG,Asia,Afghanistan,2/26/2020,0,,,38928341
-AFG,Asia,Afghanistan,2/27/2020,0,,,38928341
-AFG,Asia,Afghanistan,2/28/2020,0,,,38928341
-AFG,Asia,Afghanistan,2/29/2020,0,,,38928341
-AFG,Asia,Afghanistan,3/1/2020,0,,,38928341
-AFG,Asia,Afghanistan,3/2/2020,0,,,38928341
+LVA,Europe,Latvia,2/21/2021,410,4,29472,1886202
+LVA,Europe,Latvia,2/22/2021,274,4,31227,1886202
+LVA,Europe,Latvia,2/23/2021,669,24,33598,1886202
+LVA,Europe,Latvia,2/24/2021,983,17,37893,1886202
+LVA,Europe,Latvia,2/25/2021,813,6,42051,1886202
+LVA,Europe,Latvia,2/26/2021,725,8,45358,1886202
+LVA,Europe,Latvia,2/27/2021,827,13,45942,1886202
