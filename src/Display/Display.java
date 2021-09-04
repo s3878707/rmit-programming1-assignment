@@ -27,7 +27,7 @@ public class Display {
             for (int i = 0; i < rangeList.size(); i++) {
                 System.out.print("|\t");
                 System.out.print(rangeList.get(i)+"\t|\t"+results.getResults().get(i));
-                System.out.print("\t|");
+                System.out.print(" ".repeat(3)+"|");
                 System.out.println();
             }
             System.out.println("-".repeat(33));
@@ -51,7 +51,7 @@ public class Display {
             for (int i = 0; i < rangeList.size(); i++) {
                 System.out.print("|\t");
                 System.out.print(rangeList.get(i)+"\t|\t"+results.getResults().get(i));
-                System.out.print("\t|");
+                System.out.print(" ".repeat(3)+"|");
                 System.out.println();
             }
             System.out.println("-".repeat(33));
